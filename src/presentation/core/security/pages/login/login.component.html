@@ -1,0 +1,62 @@
+<div class="container position-absolute top-50 start-50 translate-middle">
+  <div class="card border-2 border-primary text-center p-4">
+    <div class="card-body">
+      <h1 class="card-title mb-3 font-ubuntu text-primary">Tracking Project Manager</h1>
+      <h6 class="card-subtitle mb-3 text-muted">Please log in with your account</h6>
+      <div class="container-fluid border border-1 p-3 rounded-3 mb-4">
+        <form id="frmLogin" [attr.formgroup]="frmLogin" class="form-control">
+          <div class="mb-3 mt-2 row">
+            <label for="Correo" class=" col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Correo" placeholder="email" formcontrolname=" email"
+                name="email" #email required>
+              <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmLogin.get('email')?.hasError('required') && frmLogin.get('email')?.touched">
+                Debes indicar un correo electrónico
+              </div> -->
+              <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmLogin.get('email')?.hasError('email') && frmLogin.get('email')?.touched">
+                El formato no coincide con un correo
+              </div> -->
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="password" placeholder="password"
+                formcontrolname=" password" name="password" #password required>
+              <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmLogin.get('password')?.hasError('required') && frmLogin.get('password')?.touched">
+                Debes indicar el título de la tarea
+              </div> -->
+              <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmLogin.get('password')?.hasError('pattern') && frmLogin.get('password')?.touched">
+                La contraseña debe tener mínimo ocho caracteres
+              </div> -->
+            </div>
+          </div>
+        </form>
+        <button type="button" form="frmLogin" class="btn btn-outline-success btn-lg shadow mt-3"
+          (click)="signIn(email.value, password.value)">
+          <i class="bi bi-box-arrow-in-right"> Sign In with email</i>
+        </button>
+      </div>
+      <span class="or"><span class=" orInner">O</span></span>
+      <div class="container px-4 mt-4">
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-outline-primary btn-lg shadow float-end"
+              (click)="signUp(email.value, password.value)">
+              <i class="bi bi-arrow-bar-up"> Sign Up with email</i>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-danger btn-lg shadow float-start" (click)="auth()">
+              <i class="bi bi-google"> Sign In with Google</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
