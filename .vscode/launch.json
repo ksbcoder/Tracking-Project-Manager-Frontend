@@ -9,7 +9,16 @@
       "preLaunchTask": "npm: start",
       //"preLaunchTask": "Serve Frontend",
       "postDebugTask": "end all",
-      "url": "http://localhost:4200/"
+      "url": "http://localhost:4200/",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${webRoot}/*",
+        "/./*": "${webRoot}/*",
+        "/src/*": "${webRoot}/src/*",
+        "/*": "*",
+        "/./~/*": "${workspaceFolder}/node_modules/*"
+      }
     },
     {
       "name": "ng test",
