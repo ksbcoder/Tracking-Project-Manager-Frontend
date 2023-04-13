@@ -1,0 +1,122 @@
+<div class="row m-4 text-light">
+  <div class="col col-lg-1">
+    <sofka-back-button [routeDashboard]="routeListUsers"></sofka-back-button>
+  </div>
+  <!-- <div class="col col-10 mt-3">
+    <div class="alert alert-info" role="alert">
+      Aquí puedes editar tu tarea: <strong>{{tittle}}</strong>
+    </div>
+  </div> -->
+  <div class="row m-3">
+    <div class="col col-lg-1"></div>
+    <div class="col col-10">
+      <h3>Editar</h3>
+      <div class="text-center">
+        <form id="frmUpdateUser" (ngSubmit)="sendData()" [formGroup]="frmUpdateUser"
+          class="form-control bg-container-or-form mt-3 p-3 border-0 text-start text-light shadow-lg">
+          <div class="mb-3 row">
+            <label for="Username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control bg-dark text-light" id="Username" placeholder="username"
+                formControlName="userName" name="userName">
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('userName')?.hasError('required') && frmUpdateUser.get('userName')?.touched">
+                You must indicate the username.
+              </div>
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('userName')?.hasError('minlength') && frmUpdateUser.get('userName')?.touched">
+                The username must be four characters or longer.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="Email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control bg-dark text-light" id="Email" placeholder="email"
+                formControlName="email" name="email">
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('email')?.hasError('required') && frmUpdateUser.get('email')?.touched">
+                You must indicate the email.
+              </div>
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('email')?.hasError('email') && frmUpdateUser.get('email')?.touched">
+                The email is incorrectly formatted.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="EfficiencyRate" class="col-sm-2 col-form-label">Efficiency rate</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control bg-dark text-light" id="EfficiencyRate" placeholder="50" min="0"
+                max="100" formControlName="efficiencyRate" name="efficiencyRate">
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('efficiencyRate')?.hasError('required') && frmUpdateUser.get('efficiencyRate')?.touched">
+                You must indicate the efficiency rate.
+              </div>
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('efficiencyRate')?.hasError('min') && frmUpdateUser.get('efficiencyRate')?.touched">
+                The efficiency must be greater than zero.
+              </div>
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('efficiencyRate')?.hasError('max') && frmUpdateUser.get('efficiencyRate')?.touched">
+                The efficiency must be lower than one hundred.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="TasksCompleted" class="col-sm-2 col-form-label">Tasks completed</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control bg-dark text-light" id="TasksCompleted" placeholder="50" min="0"
+                formControlName="tasksCompleted" name="tasksCompleted">
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('tasksCompleted')?.hasError('required') && frmUpdateUser.get('tasksCompleted')?.touched">
+                You must indicate the tasks completed.
+              </div>
+              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                *ngIf="frmUpdateUser.get('tasksCompleted')?.hasError('min') && frmUpdateUser.get('tasksCompleted')?.touched">
+                The tasks completed number must be greater than zero.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="Role" class="col-sm-2 col-form-label">Role</label>
+            <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
+              aria-label="Default select example" id="Role" formControlName="role" name="role">
+              <option value="" selected>Choose one...</option>
+              <option value="0">Default</option>
+              <option value="1">Admin/leader</option>
+              <option value="2">Contributor</option>
+            </select>
+            <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+              *ngIf="frmUpdateUser.get('role')?.hasError('role') && frmUpdateUser.get('role')?.touched">
+              Choose a role.
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="StateUser" class="col-sm-2 col-form-label">State user</label>
+            <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
+              aria-label="Default select example" id="StateUser" formControlName="stateUser" name="stateUser">
+              <option value="" selected>Choose one...</option>
+              <option value="0">Active</option>
+              <option value="1">Inactive</option>
+              <option value="2">Eliminated</option>
+            </select>
+            <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+              *ngIf="frmUpdateUser.get('stateUser')?.hasError('stateUser') && frmUpdateUser.get('stateUser')?.touched">
+              Choose a state.
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row m-3">
+  <div class="col col-lg-1"></div>
+  <div class="col col-10">
+    <button type="submit" form="frmUpdateUser" [disabled]="frmUpdateUser.invalid"
+      class="btn btn-action btn-lg shadow-lg bottom-0 end-0 float-end w-auto">
+      <i class="bi bi-arrow-repeat"> Update</i>
+    </button>
+  </div>
+</div>

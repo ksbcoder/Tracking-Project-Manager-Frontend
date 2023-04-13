@@ -45,8 +45,9 @@ export class UserImplementationRepository extends UserRepository {
     uidUser: string;
     user: UserModel;
   }): Observable<UpdateUserDTO> {
-    return this.http.put<UpdateUserDTO>(environment.urlApiUsers + 'ID', {
-      params,
-    });
+    return this.http.put<UpdateUserDTO>(
+      environment.urlApiUsers + 'ID?uidUser=' + params.uidUser,
+      params.user
+    );
   }
 }
