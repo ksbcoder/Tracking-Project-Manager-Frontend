@@ -33,8 +33,6 @@ export class AuthService {
       );
       localStorage.setItem('uidUser', result.user?.uid as string);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       // consumo de api
       let userData!: UserModel;
       const userDB = await this.getUserUseCase.execute(
@@ -46,7 +44,6 @@ export class AuthService {
       userDB.subscribe({
         next: (data) => {
           userData = data;
-          console.log(data);
         },
         error: (err) => {
           console.log(err);
@@ -105,7 +102,6 @@ export class AuthService {
       userDB.subscribe({
         next: (data) => {
           userData = data;
-          console.log(data);
         },
         error: (err) => {
           console.log(err);
@@ -138,7 +134,6 @@ export class AuthService {
           )
           .subscribe({
             next: (data) => {
-              console.log(data);
               localStorage.setItem(
                 'efficiencyRate',
                 data.efficiencyRate.toString()
@@ -187,7 +182,6 @@ export class AuthService {
       userDB.subscribe({
         next: (data) => {
           userData = data;
-          console.log(data);
         },
         error: (err) => {
           console.log(err);
@@ -219,7 +213,6 @@ export class AuthService {
           )
           .subscribe({
             next: (data) => {
-              console.log(data);
               localStorage.setItem(
                 'efficiencyRate',
                 data.efficiencyRate.toString()

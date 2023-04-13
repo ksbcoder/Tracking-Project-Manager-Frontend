@@ -9,14 +9,13 @@ import { UpdateUserDTO } from 'src/domain/DTO/user/updateUserDTO';
 // import { UpdateUserToUserRepositoryMapper } from './mappers/user-repository.mapper';
 import { UserRepository } from 'src/bussiness/repositories/user/user.repository';
 import { NewUserCommand } from 'src/domain/commands/user/newUserCommand';
-import { UserInterface } from 'src/domain/models/user/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserImplementationRepository extends UserRepository {
   // newUserMapper = new NewUserToUserRepositoryMapper();
-  // updateUserMapper = new UpdateUserToUserRepositoryMapper();
+  // updateUserMapper = new UpdateUserToUserRepositoryMapper()
 
   constructor(private http: HttpClient) {
     super();
@@ -36,6 +35,10 @@ export class UserImplementationRepository extends UserRepository {
     return this.http.get<UserModel>(
       environment.urlApiUsers + 'ID?uidUser=' + uidUser
     );
+  }
+
+  getUsersAsync(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(environment.urlApiUsers);
   }
 
   updateUserAsync(params: {

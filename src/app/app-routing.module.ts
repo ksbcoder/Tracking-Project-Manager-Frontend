@@ -31,8 +31,17 @@ const routes: Routes = [
   {
     path: 'projects', // localhost:4200/projects
     loadChildren: () =>
-      import('../presentation/features/project/project.module').then(
+      import('../presentation/modules/project/project.module').then(
         (module) => module.ProjectModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+  {
+    path: 'users', // localhost:4200/projects
+    loadChildren: () =>
+      import('../presentation/modules/user/user.module').then(
+        (module) => module.UserModule
       ),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },

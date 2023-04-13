@@ -3,10 +3,10 @@ import { UseCase } from 'src/base/utils/IUseCase';
 import { UserRepository } from 'src/bussiness/repositories/user/user.repository';
 import { UserModel } from 'src/domain/models/user/user.model';
 
-export class GetUserByIdUseCase implements UseCase<string, UserModel> {
+export class GetUsersUseCase implements UseCase<void, UserModel[]> {
   constructor(private userRepository: UserRepository) {}
 
-  execute(uidUser: string): Observable<UserModel> {
-    return this.userRepository.getUserByIdAsync(uidUser);
+  execute(): Observable<UserModel[]> {
+    return this.userRepository.getUsersAsync();
   }
 }

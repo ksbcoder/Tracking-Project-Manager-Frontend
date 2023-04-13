@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { UserModule } from 'src/data/repositories/user/user.module';
 
 @NgModule({
