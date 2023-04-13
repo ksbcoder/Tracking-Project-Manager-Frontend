@@ -21,7 +21,7 @@ export class UpdateUserComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.routeListUsers = ['../../list-users'];
+    this.routeListUsers = ['../../list'];
     this.frmUpdateUser = new FormGroup({
       userName: new FormControl('', [
         Validators.required,
@@ -72,7 +72,7 @@ export class UpdateUserComponent implements OnInit {
         .subscribe({
           next: (data) => {
             console.log(data);
-            this.router.navigate(['projects/list-users']);
+            this.router.navigate(['dashboard/users/list']);
           },
           error: (err) => console.log(err),
         });

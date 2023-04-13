@@ -29,10 +29,10 @@
 }
 
 .btn-general {
-  background: linear-gradient(200deg, $orange-500 30%, $orange-700 100%);
+  background: linear-gradient(200deg, $orange-500 0%, $orange-700 100%);
   background-size: 200% 100%;
   background-position: right bottom;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     background-position: left bottom;
@@ -44,7 +44,7 @@
   background: linear-gradient(200deg, $indigo-500 30%, $indigo-600 100%);
   background-size: 200% 100%;
   background-position: right bottom;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   color: $white;
 
   &:hover {

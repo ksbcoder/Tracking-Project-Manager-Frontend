@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -15,7 +14,6 @@ import { SharedModule } from 'src/presentation/shared/shared.module';
   declarations: [ListUsersComponent, UpdateUserComponent],
   imports: [
     CommonModule,
-    BrowserModule,
     SharedModule,
     UserRoutingModule,
     FormsModule,

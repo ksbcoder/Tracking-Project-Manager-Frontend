@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectLayoutComponent } from './layouts/project-layout/project-layout.component';
 import { ListProjectsComponent } from './pages/list-projects/list-projects.component';
+import { AppLayoutComponent } from 'src/presentation/shared/layouts/app-layout/app-layout.component';
+import { DashboardComponent } from 'src/presentation/core/main/pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: '', // localhost:4200/to-do-list/dashboard
-    component: ProjectLayoutComponent,
+    path: 'projects',
+    component: AppLayoutComponent,
     children: [
       {
-        path: '', // localhost:4200/to-do-list/dashboard
+        path: 'list',
         component: ListProjectsComponent,
       },
       // {
@@ -24,14 +25,10 @@ const routes: Routes = [
       //   path: 'edit/:id', // localhost:4200/to-do-list/dashboard/editar
       //   component: EditarToDoListComponent,
       // },
-      // {
-      //   path: 'list', // localhost:4200/to-do-list/dashboard/listar
-      //   component: ListadoToDoListComponent,
-      // },
-      // {
-      //   path: '**', // localhost:4200/to-do-list/dashboard
-      //   component: DashboardComponent,
-      // },
+      {
+        path: '**',
+        component: ListProjectsComponent,
+      },
     ],
   },
 ];

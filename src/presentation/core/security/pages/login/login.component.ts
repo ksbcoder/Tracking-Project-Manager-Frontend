@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/userAuth/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../../services/userAuth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   routeSingUp: string[];
   frmLogin: FormGroup;
   constructor(private readonly auth$: AuthService) {
@@ -16,6 +16,16 @@ export class LoginComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+  }
+  ngOnInit(): void {
+    localStorage.removeItem('user');
+    localStorage.removeItem('uidUser');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('email');
+    localStorage.removeItem('efficiencyRate');
+    localStorage.removeItem('tasksCompleted');
+    localStorage.removeItem('role');
+    localStorage.removeItem('stateUser');
   }
 
   auth(): void {

@@ -27,11 +27,9 @@ export class AuthService {
         email,
         password
       );
-      localStorage.setItem(
-        'userName',
-        result.user?.displayName ? result.user?.displayName : 'User'
-      );
       localStorage.setItem('uidUser', result.user?.uid as string);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // consumo de api
       let userData!: UserModel;
@@ -39,7 +37,7 @@ export class AuthService {
         localStorage.getItem('uidUser') as string
       );
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       userDB.subscribe({
         next: (data) => {
@@ -50,10 +48,14 @@ export class AuthService {
         },
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       this.afAuth.authState.subscribe((user) => {
         if (user && userData != undefined) {
+          localStorage.setItem(
+            'userName',
+            userData.userName ? userData.userName : 'User'
+          );
           localStorage.setItem('email', userData.email);
           localStorage.setItem(
             'efficiencyRate',
@@ -65,7 +67,7 @@ export class AuthService {
           );
           localStorage.setItem('role', userData.role.toString());
           localStorage.setItem('stateUser', userData.stateUser.toString());
-          this.router.navigate(['projects']);
+          this.router.navigate(['dashboard']);
         }
       });
     } catch (error) {
@@ -97,7 +99,7 @@ export class AuthService {
         localStorage.getItem('uidUser') as string
       );
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       userDB.subscribe({
         next: (data) => {
@@ -108,10 +110,13 @@ export class AuthService {
         },
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       if (userData != undefined) {
-        console.log(userData);
+        localStorage.setItem(
+          'userName',
+          userData.userName ? userData.userName : 'User'
+        );
         localStorage.setItem(
           'efficiencyRate',
           userData.efficiencyRate.toString()
@@ -122,7 +127,7 @@ export class AuthService {
         );
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
-        this.router.navigate(['projects']);
+        this.router.navigate(['dashboard']);
       } else {
         await this.createUserUseCase
           .execute(
@@ -134,6 +139,10 @@ export class AuthService {
           )
           .subscribe({
             next: (data) => {
+              localStorage.setItem(
+                'userName',
+                userData.userName ? userData.userName : 'User'
+              );
               localStorage.setItem(
                 'efficiencyRate',
                 data.efficiencyRate.toString()
@@ -149,7 +158,7 @@ export class AuthService {
               console.log(err);
             },
           });
-        this.router.navigate(['projects']);
+        this.router.navigate(['dashboard']);
       }
     } catch (error) {
       window.alert(error);
@@ -159,7 +168,7 @@ export class AuthService {
   // Sign in with Google
   async GoogleAuth() {
     const res = await this.AuthLogin(new auth.GoogleAuthProvider());
-    this.router.navigate(['projects']);
+    this.router.navigate(['dashboard']);
   }
   // Auth logic to run auth providers
   private async AuthLogin(provider: any) {
@@ -177,7 +186,7 @@ export class AuthService {
         localStorage.getItem('uidUser') as string
       );
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       userDB.subscribe({
         next: (data) => {
@@ -188,7 +197,7 @@ export class AuthService {
         },
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       if (userData != undefined) {
         localStorage.setItem(
@@ -201,7 +210,7 @@ export class AuthService {
         );
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
-        this.router.navigate(['projects']);
+        this.router.navigate(['dashboard']);
       } else {
         this.createUserUseCase
           .execute(
@@ -228,7 +237,7 @@ export class AuthService {
               console.log(err);
             },
           });
-        this.router.navigate(['projects']);
+        this.router.navigate(['dashboard']);
       }
     } catch (error) {
       window.alert(error);

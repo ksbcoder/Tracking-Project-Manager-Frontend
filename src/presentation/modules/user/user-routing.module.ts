@@ -1,44 +1,40 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectLayoutComponent } from '../project/layouts/project-layout/project-layout.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
+import { AppLayoutComponent } from 'src/presentation/shared/layouts/app-layout/app-layout.component';
+import {
+  AdminRoleGuard,
+  allowedRoles,
+} from 'src/presentation/shared/guards/admin-role.guard';
+import { Roles } from 'src/base/utils/enums';
 
 const routes: Routes = [
   {
-    path: '', // localhost:4200/to-do-list/dashboard
-    component: ProjectLayoutComponent,
+    path: 'users',
+    canActivate: [allowedRoles([Roles.Admin])],
+    canLoad: [allowedRoles([Roles.Admin])],
+    component: AppLayoutComponent,
     children: [
       {
-        path: 'list-users', // localhost:4200/to-do-list/dashboard
+        path: 'list',
         component: ListUsersComponent,
       },
       {
-        path: 'update-user/:id', // localhost:4200/to-do-list/dashboard/detalle/x
+        path: 'update/:id',
         component: UpdateUserComponent,
       },
-      // {
-      //   path: 'add', // localhost:4200/to-do-list/dashboard/agregar
-      //   component: AgregarToDoListComponent,
-      // },
-      // {
-      //   path: 'edit/:id', // localhost:4200/to-do-list/dashboard/editar
-      //   component: EditarToDoListComponent,
-      // },
-      // {
-      //   path: 'list', // localhost:4200/to-do-list/dashboard/listar
-      //   component: ListadoToDoListComponent,
-      // },
-      // {
-      //   path: '**', // localhost:4200/to-do-list/dashboard
-      //   component: DashboardComponent,
-      // },
+      {
+        path: '**',
+        component: ListUsersComponent,
+      },
     ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  providers: [AdminRoleGuard],
   exports: [RouterModule],
 })
 export class UserRoutingModule {}

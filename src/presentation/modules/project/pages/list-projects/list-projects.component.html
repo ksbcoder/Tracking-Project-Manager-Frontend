@@ -1,1 +1,57 @@
-<p class="text-light">list-projects works!</p>
+<div class="row m-4">
+  <div class="col col-lg-1">
+    <sofka-back-button [routeDashboard]="routeDashboard"></sofka-back-button>
+  </div>
+  <!-- <div class="alert alert-info" role="alert">
+    <h5 class="text-primary">
+      ¡Hola! Aquí puedes hacer lo siguiente:
+      <a class="btn btn-lg btn-outline-primary shadow ms-4" [routerLink]="routeAdd">
+        Agregar una tarea
+      </a>
+    </h5>
+  </div> -->
+</div>
+<div class="col m-5 mt-0 text-light">
+  <h2 class="mb-4">Projects list</h2>
+  <div class=" table-responsive">
+    <table class="table table-dark table-hover">
+      <caption>
+        Projects list
+      </caption>
+      <thead>
+        <tr class=" text-light">
+          <th scope=" col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider text-light">
+        <!-- <tr *ngIf="empty;else datos" class="text-center">
+          <th colspan=" 4">No hay elementos para mostrar</th>
+        </tr>
+        <ng-template #datos class="text-light">
+          <tr *ngFor="let item of usersList">
+            <th scope="row">{{item.userName}}</th>
+            <td>{{item.email | lowercase}}</td>
+            <td>{{item.role | roleNumberToString}}</td>
+            <td>
+              <a class="btn btn-sm btn-outline-info bg-opacity-75 me-2 text-light shadow"
+                [routerLink]="['../update', item.uidUser]">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a class="btn btn-sm btn-warning bg-warning bg-opacity-75 me-2 text-light shadow"
+                [routerLink]="['edit', item.itemId]">
+                <i class="bi bi-pencil-fill"></i>
+              </a>
+              <a class="btn btn-sm btn-danger bg-danger bg-opacity-75 text-light shadow" data-bs-toggle="modal"
+                data-bs-target="#modal-delete" (click)="modal(item.itemId, item.title)">
+                <i class="bi bi-trash-fill"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-template> -->
+      </tbody>
+    </table>
+  </div>
+</div>

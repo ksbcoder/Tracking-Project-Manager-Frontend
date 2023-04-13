@@ -9,13 +9,13 @@ import { UserModel } from 'src/domain/models/user/user.model';
 })
 export class ListUsersComponent implements OnInit {
   //routes
-  routeProjects: string[];
+  routeDashboard: string[];
   //variables
   usersList: UserModel[];
   empty: boolean;
 
   constructor(private getUsers: GetUsersUseCase) {
-    this.routeProjects = ['../../projects'];
+    this.routeDashboard = ['../../'];
     this.usersList = [];
     this.empty = false;
   }

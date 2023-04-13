@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark navbar-expand-lg sticky-top">
-  <div class="container-fluid ps-4">
-    <a class="navbar-brand text-light" [routerLink]="routeDashboard">
+  <div class="container-fluid ps-sm-5">
+    <a class="navbar-brand text-light" (click)="redirectToDashboard()">
       <strong>
         <h2 class="titles">TPM</h2>
       </strong>
@@ -9,15 +9,22 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse pe-sm-4" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
-        <li class="nav-item dropdown">
+        <li *sofkaShowForRoles="[1, 2]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Projects
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="routeListProjects">Functions</a></li>
+          </ul>
+        </li>
+        <li *sofkaShowForRoles="[1]" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Users
           </a>
           <ul class="dropdown-menu">
-            <!-- <li><a class="dropdown-item" [routerLink]="routeAdd">Agregar</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="routeListUsers">Listar</a></li>
+            <li><a class="dropdown-item" [routerLink]="routeListUsers">Functions</a></li>
           </ul>
         </li>
       </ul>

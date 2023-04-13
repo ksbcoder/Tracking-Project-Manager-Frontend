@@ -7,6 +7,8 @@ import {
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
+import { AdminRoleGuard } from 'src/presentation/shared/guards/admin-role.guard';
+import { Roles } from 'src/base/utils/enums';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['sign-in']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -28,23 +30,40 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectLoggedInToDashboard },
   },
+
   {
-    path: 'projects', // localhost:4200/projects
+    path: 'dashboard', // localhost:4200/dashboard
     loadChildren: () =>
-      import('../presentation/modules/project/project.module').then(
+      import('../../dashboard.module').then((module) => module.DashboardModule),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+
+  {
+    path: 'dashboard/projects', // localhost:4200/dashboard/projects
+    loadChildren: () =>
+      import('../../../../modules/project/project.module').then(
         (module) => module.ProjectModule
       ),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
+
   {
-    path: 'users', // localhost:4200/projects
+    path: 'dashboard/users', // localhost:4200/dashboard/users
+    canActivate: [AngularFireAuthGuard],
     loadChildren: () =>
-      import('../presentation/modules/user/user.module').then(
+      import('../../../../modules/user/user.module').then(
         (module) => module.UserModule
       ),
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
+  },
+
+  {
+    path: '**',
+    component: LoginComponent,
   },
 ];
 
