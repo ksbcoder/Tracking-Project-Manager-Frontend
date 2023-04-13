@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/dist/css/bootstrap.css";
 
 .header {
   font-size: larger;
@@ -10,11 +11,41 @@
 
 .footer {
   background-color: #333333;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .body {
   height: 100%;
   font-family: 'Ubuntu', sans-serif;
 }
+
+.titles {
+  color: $orange-500;
+}
+
+.btn-general {
+  background: linear-gradient(200deg, $orange-500 30%, $orange-700 100%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    background-position: left bottom;
+    color: $white;
+  }
+}
+
+.btn-back {
+  background: linear-gradient(200deg, $orange-500 30%, $orange-700 100%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    background-position: left bottom;
+    color: $white;
+  }
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&family=Ubuntu:ital,wght@0,300;0,400;1,300&display=swap');
