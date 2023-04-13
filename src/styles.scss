@@ -5,12 +5,12 @@
 
 .header {
   font-size: larger;
-  background-color: #333333;
+  background-color: $gray-800;
   font-family: 'Cairo', sans-serif;
 }
 
 .footer {
-  background-color: #333333;
+  background-color: $gray-800;
   font-family: "Ubuntu", sans-serif;
 }
 
@@ -23,11 +23,16 @@
   color: $orange-500;
 }
 
+.bg-container-or-form {
+  background-color: $gray-800;
+  color: $white;
+}
+
 .btn-general {
   background: linear-gradient(200deg, $orange-500 30%, $orange-700 100%);
   background-size: 200% 100%;
   background-position: right bottom;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     background-position: left bottom;
@@ -35,11 +40,12 @@
   }
 }
 
-.btn-back {
-  background: linear-gradient(200deg, $orange-500 30%, $orange-700 100%);
+.btn-action {
+  background: linear-gradient(200deg, $indigo-500 30%, $indigo-600 100%);
   background-size: 200% 100%;
   background-position: right bottom;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  color: $white;
 
   &:hover {
     background-position: left bottom;
