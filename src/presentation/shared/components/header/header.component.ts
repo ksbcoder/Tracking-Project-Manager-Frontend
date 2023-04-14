@@ -20,8 +20,6 @@ import { allowedRoles } from '../../guards/admin-role.guard';
 export class HeaderComponent implements OnInit {
   routeListUsers: string[];
   routeListProjects: string[];
-  role: Roles;
-  allowToShow: boolean;
   // state: boolean;
   userName!: string | null;
 
@@ -31,8 +29,6 @@ export class HeaderComponent implements OnInit {
   ) {
     this.routeListUsers = ['users/list'];
     this.routeListProjects = ['projects/list'];
-    this.role = parseInt(localStorage.getItem('role') ?? '0');
-    this.allowToShow = false;
     // this.state = this.state$.State;
   }
 
@@ -45,9 +41,6 @@ export class HeaderComponent implements OnInit {
     if (localStorage.getItem('userName') !== null) {
       // this.changeState();
       this.userName = localStorage.getItem('userName');
-    }
-    if (allowedRoles([this.role])) {
-      this.allowToShow = true;
     }
   }
 

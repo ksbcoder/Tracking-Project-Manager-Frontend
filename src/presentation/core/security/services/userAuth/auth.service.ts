@@ -13,6 +13,8 @@ import { UserModel } from 'src/domain/models/user/user.model';
   providedIn: 'root',
 })
 export class AuthService {
+  userData!: UserModel;
+
   constructor(
     private router: Router,
     private getUserUseCase: GetUserByIdUseCase,
@@ -29,26 +31,22 @@ export class AuthService {
       );
       localStorage.setItem('uidUser', result.user?.uid as string);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       // consumo de api
       let userData!: UserModel;
-      const userDB = await this.getUserUseCase.execute(
-        localStorage.getItem('uidUser') as string
-      );
+      this.getUserUseCase
+        .execute(localStorage.getItem('uidUser') as string)
+        .subscribe({
+          next: (data) => {
+            userData = data;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      userDB.subscribe({
-        next: (data) => {
-          userData = data;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       this.afAuth.authState.subscribe((user) => {
         if (user && userData != undefined) {
@@ -67,7 +65,10 @@ export class AuthService {
           );
           localStorage.setItem('role', userData.role.toString());
           localStorage.setItem('stateUser', userData.stateUser.toString());
-          this.router.navigate(['dashboard']);
+
+          setTimeout(() => {
+            this.router.navigate(['dashboard']);
+          }, 1200);
         }
       });
     } catch (error) {
@@ -91,26 +92,22 @@ export class AuthService {
       );
       localStorage.setItem('uidUser', result.user?.uid as string);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       // consumo de api
       let userData!: UserModel;
-      const userDB = await this.getUserUseCase.execute(
-        localStorage.getItem('uidUser') as string
-      );
+      this.getUserUseCase
+        .execute(localStorage.getItem('uidUser') as string)
+        .subscribe({
+          next: (data) => {
+            userData = data;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      userDB.subscribe({
-        next: (data) => {
-          userData = data;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       if (userData != undefined) {
         localStorage.setItem(
@@ -127,9 +124,11 @@ export class AuthService {
         );
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
-        this.router.navigate(['dashboard']);
+        setTimeout(() => {
+          this.router.navigate(['dashboard']);
+        }, 1200);
       } else {
-        await this.createUserUseCase
+        this.createUserUseCase
           .execute(
             new NewUserCommand(
               localStorage.getItem('uidUser') as string,
@@ -158,7 +157,9 @@ export class AuthService {
               console.log(err);
             },
           });
-        this.router.navigate(['dashboard']);
+        setTimeout(() => {
+          this.router.navigate(['dashboard']);
+        }, 1200);
       }
     } catch (error) {
       window.alert(error);
@@ -178,26 +179,22 @@ export class AuthService {
       localStorage.setItem('uidUser', result.user?.uid as string);
       localStorage.setItem('email', result.user?.email as string);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       // consumo de api
       let userData!: UserModel;
-      const userDB = this.getUserUseCase.execute(
-        localStorage.getItem('uidUser') as string
-      );
+      this.getUserUseCase
+        .execute(localStorage.getItem('uidUser') as string)
+        .subscribe({
+          next: (data) => {
+            userData = data;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      userDB.subscribe({
-        next: (data) => {
-          userData = data;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       if (userData != undefined) {
         localStorage.setItem(
@@ -210,7 +207,9 @@ export class AuthService {
         );
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
-        this.router.navigate(['dashboard']);
+        setTimeout(() => {
+          this.router.navigate(['dashboard']);
+        }, 1200);
       } else {
         this.createUserUseCase
           .execute(
@@ -237,7 +236,9 @@ export class AuthService {
               console.log(err);
             },
           });
-        this.router.navigate(['dashboard']);
+        setTimeout(() => {
+          this.router.navigate(['dashboard']);
+        }, 1200);
       }
     } catch (error) {
       window.alert(error);
@@ -246,7 +247,12 @@ export class AuthService {
 
   // Sign out
   async SignOut() {
+    this.clearLocalStorage();
     await this.afAuth.signOut();
+    this.router.navigate(['']);
+  }
+
+  clearLocalStorage() {
     localStorage.removeItem('user');
     localStorage.removeItem('uidUser');
     localStorage.removeItem('userName');
@@ -255,6 +261,5 @@ export class AuthService {
     localStorage.removeItem('tasksCompleted');
     localStorage.removeItem('role');
     localStorage.removeItem('stateUser');
-    this.router.navigate(['sign-in']);
   }
 }
