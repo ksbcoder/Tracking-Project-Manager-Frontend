@@ -8,12 +8,4 @@ export class NewUserCommand {
     this.UserName = userName;
     this.Email = email;
   }
-
-  getData(): { UidUser: string; UserName: string; Email: string } {
-    return {
-      UidUser: this.UidUser,
-      UserName: this.UserName,
-      Email: this.Email,
-    };
-  }
 }

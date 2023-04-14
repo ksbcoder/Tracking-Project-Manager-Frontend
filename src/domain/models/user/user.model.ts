@@ -29,17 +29,4 @@ export class UserModel {
     this.role = role;
     this.stateUser = stateUser;
   }
-
-  // getdata() {
-  //   return {
-  //     userID: this.userID,
-  //     uidUser: this.uidUser,
-  //     userName: this.userName,
-  //     email: this.email,
-  //     efficiencyRate: this.efficiencyRate,
-  //     tasksCompleted: this.tasksCompleted,
-  //     role: this.role,
-  //     stateUser: this.stateUser,
-  //   };
-  // }
 }

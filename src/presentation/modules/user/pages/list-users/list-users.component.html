@@ -25,8 +25,8 @@
         <ng-template #datos class="text-light">
           <tr *ngFor="let item of usersList">
             <th scope="row">{{item.userName}}</th>
-            <td>{{item.email | lowercase}}</td>
-            <td>{{item.role | roleNumberToString}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.role | enumsNumberToStringPipe: 'role'}}</td>
             <td>
               <a class="btn btn-sm btn-outline-info bg-opacity-75 me-2 text-light shadow"
                 [routerLink]="['../update', item.uidUser]">
@@ -37,17 +37,6 @@
         </ng-template>
       </tbody>
     </table>
-  </div>
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
   </div>
 </div>
 

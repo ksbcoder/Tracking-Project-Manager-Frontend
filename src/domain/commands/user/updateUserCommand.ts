@@ -23,22 +23,4 @@ export class UpdateUserCommand {
     this.Role = role;
     this.StateUser = stateUser;
   }
-
-  getData(): {
-    UserName: string;
-    Email: string;
-    EfficiencyRate: number;
-    TasksCompleted: number;
-    Role: Roles;
-    StateUser: StateUser;
-  } {
-    return {
-      UserName: this.UserName,
-      Email: this.Email,
-      EfficiencyRate: this.EfficiencyRate,
-      TasksCompleted: this.TasksCompleted,
-      Role: this.Role,
-      StateUser: this.StateUser,
-    };
-  }
 }
