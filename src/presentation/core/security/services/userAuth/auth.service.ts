@@ -169,15 +169,18 @@ export class AuthService {
   // Sign in with Google
   async GoogleAuth() {
     const res = await this.AuthLogin(new auth.GoogleAuthProvider());
-    this.router.navigate(['dashboard']);
+    setTimeout(() => {
+      this.router.navigate(['dashboard']);
+    }, 1200);
   }
   // Auth logic to run auth providers
   private async AuthLogin(provider: any) {
     try {
       const result = await this.afAuth.signInWithPopup(provider);
-      localStorage.setItem('userName', result.user?.displayName as string);
+      this.clearLocalStorage();
+      localStorage.setItem('user', JSON.stringify(result.user));
+      console.log(result.user?.displayName);
       localStorage.setItem('uidUser', result.user?.uid as string);
-      localStorage.setItem('email', result.user?.email as string);
 
       await new Promise((resolve) => setTimeout(resolve, 50));
 
@@ -194,9 +197,11 @@ export class AuthService {
           },
         });
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       if (userData != undefined) {
+        localStorage.setItem('userName', userData.userName.toString());
+        localStorage.setItem('email', userData.email.toString());
         localStorage.setItem(
           'efficiencyRate',
           userData.efficiencyRate.toString()
@@ -209,7 +214,7 @@ export class AuthService {
         localStorage.setItem('stateUser', userData.stateUser.toString());
         setTimeout(() => {
           this.router.navigate(['dashboard']);
-        }, 1200);
+        }, 2500);
       } else {
         this.createUserUseCase
           .execute(
@@ -247,9 +252,9 @@ export class AuthService {
 
   // Sign out
   async SignOut() {
-    this.clearLocalStorage();
     await this.afAuth.signOut();
     this.router.navigate(['']);
+    this.clearLocalStorage();
   }
 
   clearLocalStorage() {
