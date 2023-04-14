@@ -4,9 +4,10 @@ import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { AppLayoutComponent } from 'src/presentation/shared/layouts/app-layout/app-layout.component';
 import {
-  AdminRoleGuard,
+  HasRoleGuard,
   allowedRoles,
-} from 'src/presentation/shared/guards/admin-role.guard';
+} from 'src/presentation/shared/guards/has-role.guard';
+
 import { Roles } from 'src/base/utils/enums';
 
 const routes: Routes = [
@@ -34,7 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: [AdminRoleGuard],
+  providers: [HasRoleGuard],
   exports: [RouterModule],
 })
 export class UserRoutingModule {}

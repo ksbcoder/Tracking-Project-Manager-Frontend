@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListProjectsComponent } from './pages/list-projects/list-projects.component';
 import { AppLayoutComponent } from 'src/presentation/shared/layouts/app-layout/app-layout.component';
-import { DashboardComponent } from 'src/presentation/core/main/pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {

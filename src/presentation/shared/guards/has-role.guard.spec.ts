@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AdminRoleGuard } from './admin-role.guard';
+import { HasRoleGuard } from './has-role.guard';
 
-describe('AdminRoleGuardGuard', () => {
-  let guard: AdminRoleGuard;
+describe('HasRoleGuard', () => {
+  let guard: HasRoleGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(AdminRoleGuard);
+    guard = TestBed.inject(HasRoleGuard);
   });
 
   it('should be created', () => {

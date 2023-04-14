@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { UserModule } from 'src/data/repositories/user/user.module';
+import { ProjectModule } from 'src/data/repositories/project/project.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     CommonModule,
     UserModule,
+    ProjectModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

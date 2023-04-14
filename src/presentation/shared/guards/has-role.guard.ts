@@ -4,9 +4,6 @@ import {
   CanActivate,
   CanLoad,
   Route,
-  RouterStateSnapshot,
-  UrlSegment,
-  UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Roles } from 'src/base/utils/enums';
@@ -14,7 +11,7 @@ import { Roles } from 'src/base/utils/enums';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminRoleGuard implements CanActivate, CanLoad {
+export class HasRoleGuard implements CanActivate, CanLoad {
   canLoad(route: Route): boolean | Observable<boolean> {
     return this.allowedRoles(route);
   }
@@ -32,8 +29,6 @@ export class AdminRoleGuard implements CanActivate, CanLoad {
 export function allowedRoles(allowedRoles: Roles[]) {
   return () => {
     const userRole = parseInt(localStorage.getItem('role') ?? '0');
-
-    console.log(userRole);
     return Boolean(userRole && allowedRoles.includes(userRole));
   };
 }

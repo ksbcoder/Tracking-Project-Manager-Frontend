@@ -53,5 +53,31 @@
   }
 }
 
+.btn-outline-teal {
+  color: $teal-400;
+  background-color: transparent;
+  background-image: none;
+  border-color: $teal-400;
+}
+
+.btn-outline-teal:hover {
+  color: $teal-500;
+  background-color: $teal-500;
+  border-color: $teal-500;
+}
+
+.btn-outline-pink {
+  color: $pink-400;
+  background-color: transparent;
+  background-image: none;
+  border-color: $pink-400;
+}
+
+.btn-outline-pink:hover {
+  color: $pink-500;
+  background-color: $pink-500;
+  border-color: $pink-500;
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&family=Ubuntu:ital,wght@0,300;0,400;1,300&display=swap');

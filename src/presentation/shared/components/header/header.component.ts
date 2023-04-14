@@ -8,8 +8,6 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../../core/security/services/userAuth/auth.service';
 import { Router } from '@angular/router';
-import { Roles } from 'src/base/utils/enums';
-import { allowedRoles } from '../../guards/admin-role.guard';
 // import { StateService } from '../../../../shared/services/state.service';
 
 @Component({

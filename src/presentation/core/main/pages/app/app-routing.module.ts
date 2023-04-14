@@ -7,8 +7,6 @@ import {
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
-import { AdminRoleGuard } from 'src/presentation/shared/guards/admin-role.guard';
-import { Roles } from 'src/base/utils/enums';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['sign-in']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
