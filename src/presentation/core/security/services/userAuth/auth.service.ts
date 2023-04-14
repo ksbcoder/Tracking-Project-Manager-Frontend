@@ -68,7 +68,7 @@ export class AuthService {
 
           setTimeout(() => {
             this.router.navigate(['dashboard']);
-          }, 1200);
+          }, 1500);
         }
       });
     } catch (error) {
@@ -126,7 +126,7 @@ export class AuthService {
         localStorage.setItem('stateUser', userData.stateUser.toString());
         setTimeout(() => {
           this.router.navigate(['dashboard']);
-        }, 1200);
+        }, 1500);
       } else {
         this.createUserUseCase
           .execute(
@@ -159,7 +159,7 @@ export class AuthService {
           });
         setTimeout(() => {
           this.router.navigate(['dashboard']);
-        }, 1200);
+        }, 1500);
       }
     } catch (error) {
       window.alert(error);
@@ -171,7 +171,7 @@ export class AuthService {
     const res = await this.AuthLogin(new auth.GoogleAuthProvider());
     setTimeout(() => {
       this.router.navigate(['dashboard']);
-    }, 1200);
+    }, 2500);
   }
   // Auth logic to run auth providers
   private async AuthLogin(provider: any) {
@@ -243,7 +243,7 @@ export class AuthService {
           });
         setTimeout(() => {
           this.router.navigate(['dashboard']);
-        }, 1200);
+        }, 2500);
       }
     } catch (error) {
       window.alert(error);
