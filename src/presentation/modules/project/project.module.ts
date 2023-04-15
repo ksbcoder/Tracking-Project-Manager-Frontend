@@ -8,9 +8,13 @@ import { environment } from 'src/environments/environment';
 import { ListProjectsComponent } from './pages/list-projects/list-projects.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { SharedModule } from 'src/presentation/shared/shared.module';
+import { CreateProjectComponent } from './pages/create-project/create-project.component';
+import { FormProjectComponent } from './components/form-project/form-project.component';
+import { UpdateProjectComponent } from './pages/update-project/update-project.component';
+import { GetProjectComponent } from './pages/get-project/get-project.component';
 
 @NgModule({
-  declarations: [ListProjectsComponent],
+  declarations: [ListProjectsComponent, CreateProjectComponent, FormProjectComponent, UpdateProjectComponent, GetProjectComponent],
   imports: [
     CommonModule,
     SharedModule,

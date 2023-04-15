@@ -1,6 +1,6 @@
 <div class="row m-4">
   <div class="col col-lg-1">
-    <sofka-back-button [routeDashboard]="routeDashboard"></sofka-back-button>
+    <sofka-back-button [routeBack]="routeDashboard"></sofka-back-button>
   </div>
 </div>
 <div class="col m-5 mt-0 text-light">
@@ -8,8 +8,8 @@
     <div class="col">
       <h2 class="mb-4">Projects list</h2>
     </div>
-    <div class="col">
-      <button class="btn btn-action btn-lg float-end me-2" type="button">
+    <div *sofkaShowForRoles="[1]" class="col">
+      <button class="btn btn-action btn-lg float-end me-2" type="button" [routerLink]="routeCreate">
         Create Project
       </button>
     </div>
@@ -26,12 +26,13 @@
             <th scope="col">Deadline</th>
             <th scope="col">Phase</th>
             <th scope="col">Completed at</th>
+            <th scope="col">State</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody class="table-group-divider text-light text-center">
           <tr *ngIf=" empty;else datos" class="text-center">
-            <th colspan="6">No hay elementos para mostrar</th>
+            <th colspan="8">No hay elementos para mostrar</th>
           </tr>
           <ng-template #datos class="text-light">
             <tr *ngFor="let item of projectsList">
@@ -41,26 +42,29 @@
               <td>{{item.deadLine | date }}</td>
               <td>{{item.phase | enumsNumberToStringPipe: 'phase' }}</td>
               <td>{{item.completedAt | date }}</td>
+              <td>{{item.stateProject | enumsNumberToStringPipe: 'stateProject' }}</td>
               <td>
                 <button class="btn btn-sm btn-outline-teal text-light shadow me-1" data-bs-toggle="modal"
                   data-bs-target="#modal-update" (click)="modal(item.projectID, item.name)"
-                  [disabled]="item.openDate !== null">
+                  [hidden]="item.openDate !== null">
                   <i class="bi bi-folder2-open"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-pink text-light shadow me-1" data-bs-toggle="modal"
-                  data-bs-target="#modal-delete">
+                  data-bs-target="#modal-complete" (click)="modal(item.projectID, item.name)"
+                  [hidden]="item.phase === null || item.stateProject !== 0">
                   <i class=" bi bi-folder2"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-info text-light shadow me-1" data-bs-toggle="modal"
-                  data-bs-target="#modal-delete">
+                <button class="btn btn-sm btn-outline-info text-light shadow me-1"
+                  [routerLink]="['../detail', item.projectID]">
                   <i class=" bi bi-eye"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-warning bg-opacity-75 me-1 text-light shadow"
-                  [routerLink]="['edit', item.projectID]">
+                  [routerLink]="['../update', item.projectID]"
+                  [hidden]="item.openDate === null || item.completedAt !== null">
                   <i class="bi bi-pencil-fill"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-danger text-light shadow" data-bs-toggle="modal"
-                  data-bs-target="#modal-delete">
+                  data-bs-target="#modal-delete" (click)="modal(item.projectID, item.name)">
                   <i class="bi bi-trash3"></i>
                 </button>
               </td>
@@ -76,14 +80,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-dark text-light">
-          <h1 class="modal-title fs-5" id="delModalLabel"> ¿Are you sure to open <strong>{{name}}</strong> project?
+          <h1 class="modal-title fs-5" id="update"> ¿Are you sure to open <strong>{{name}}</strong> project?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body bg-dark text-light">
           <form id="frmUpdate" (ngSubmit)="openProject()" [formGroup]="frmUpdate">
             <div class="mb-3">
-              <label for="deadline" class="form-label">Deadline</label>
+              <label for="deadline" class="form-label">Please choose deadline</label>
               <input class="form-control" type="date" name="deadline" id="deadline" formControlName="deadline">
             </div>
             <div class="alert alert-warning p-1 m-1 mt-1 ms-2" role="alert"
@@ -93,9 +97,45 @@
           </form>
         </div>
         <div class="modal-footer bg-dark text-light">
-          <a type="button" class="btn btn-outline-primary text-light" data-bs-dismiss="modal">Close</a>
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <button type="submit" form="frmUpdate" [disabled]="frmUpdate.invalid" class="btn btn-outline-teal text-light"
             data-bs-dismiss="modal">Open</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal complete -->
+  <div class="modal fade" id="modal-complete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h1 class="modal-title fs-5" id="delete"> ¿Are you sure to complete <strong>{{name}}</strong> project?
+          </h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-footer bg-dark text-light">
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+          <a type="button" class="btn btn-outline-pink text-light" (click)="completeProject(projectID)"
+            data-bs-dismiss="modal">Complete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal delete -->
+  <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h1 class="modal-title fs-5" id="delete"> ¿Are you sure to delete <strong>{{name}}</strong> project?
+          </h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-footer bg-dark text-light">
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+          <a type="button" class="btn btn-outline-danger text-light" (click)="deleteProject(projectID)"
+            data-bs-dismiss="modal">Delete</a>
         </div>
       </div>
     </div>
