@@ -35,7 +35,7 @@ export class AuthService {
 
       // consumo de api
       let userData!: UserModel;
-      this.getUserUseCase
+      let sub = this.getUserUseCase
         .execute(localStorage.getItem('uidUser') as string)
         .subscribe({
           next: (data) => {
@@ -67,6 +67,7 @@ export class AuthService {
           localStorage.setItem('stateUser', userData.stateUser.toString());
 
           setTimeout(() => {
+            sub.unsubscribe();
             this.router.navigate(['dashboard']);
           }, 1500);
         }
@@ -96,7 +97,7 @@ export class AuthService {
 
       // consumo de api
       let userData!: UserModel;
-      this.getUserUseCase
+      let subGet = this.getUserUseCase
         .execute(localStorage.getItem('uidUser') as string)
         .subscribe({
           next: (data) => {
@@ -125,10 +126,11 @@ export class AuthService {
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
         setTimeout(() => {
+          subGet.unsubscribe();
           this.router.navigate(['dashboard']);
         }, 1500);
       } else {
-        this.createUserUseCase
+        let subCreate = this.createUserUseCase
           .execute(
             new NewUserCommand(
               localStorage.getItem('uidUser') as string,
@@ -158,6 +160,7 @@ export class AuthService {
             },
           });
         setTimeout(() => {
+          subCreate.unsubscribe();
           this.router.navigate(['dashboard']);
         }, 1500);
       }
@@ -186,7 +189,7 @@ export class AuthService {
 
       // consumo de api
       let userData!: UserModel;
-      this.getUserUseCase
+      let subGet = this.getUserUseCase
         .execute(localStorage.getItem('uidUser') as string)
         .subscribe({
           next: (data) => {
@@ -213,10 +216,11 @@ export class AuthService {
         localStorage.setItem('role', userData.role.toString());
         localStorage.setItem('stateUser', userData.stateUser.toString());
         setTimeout(() => {
+          subGet.unsubscribe();
           this.router.navigate(['dashboard']);
         }, 2500);
       } else {
-        this.createUserUseCase
+        let subCreate = this.createUserUseCase
           .execute(
             new NewUserCommand(
               localStorage.getItem('uidUser') as string,
@@ -242,6 +246,7 @@ export class AuthService {
             },
           });
         setTimeout(() => {
+          subCreate.unsubscribe();
           this.router.navigate(['dashboard']);
         }, 2500);
       }

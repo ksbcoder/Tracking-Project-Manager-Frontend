@@ -21,7 +21,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers.execute().subscribe({
+    let subGet = this.getUsers.execute().subscribe({
       next: (data) => {
         this.usersList = data;
         this.empty = false;
@@ -31,5 +31,8 @@ export class ListUsersComponent implements OnInit {
         this.empty = true;
       },
     });
+    setTimeout(() => {
+      subGet.unsubscribe();
+    }, 500);
   }
 }

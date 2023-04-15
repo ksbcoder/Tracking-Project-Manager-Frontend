@@ -15,6 +15,7 @@ export class UpdateUserComponent implements OnInit {
   //variables
   frmUpdateUser: FormGroup;
 
+  //#region constructor
   constructor(
     private getUserById: GetUserByIdUseCase,
     private updateUser: UpdateUserUseCase,
@@ -41,10 +42,13 @@ export class UpdateUserComponent implements OnInit {
       stateUser: new FormControl('', [Validators.required]),
     });
   }
+  //#endregion
 
+  //#region on init (formPreload)
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.getUserById.execute(params['id']).subscribe({
+    let subGet: any;
+    let subParams = this.route.params.subscribe((params) => {
+      subGet = this.getUserById.execute(params['id']).subscribe({
         next: (data) => {
           this.frmUpdateUser.setValue({
             userName: data.userName,
@@ -58,26 +62,34 @@ export class UpdateUserComponent implements OnInit {
         error: (err) => console.log(err),
       });
     });
+    setTimeout(() => {
+      subParams.unsubscribe();
+      subGet.unsubscribe();
+    }, 500);
   }
+  //#endregion
 
+  //#region send data
   sendData(): void {
     this.convertSelectsValuesToNumber();
-    this.route.params.subscribe((params) => {
-      console.log(this.frmUpdateUser.getRawValue());
+    let subUpdate: any;
+    let subParams = this.route.params.subscribe((params) => {
       this.updateUser
         .execute({
           uidUser: params['id'],
           user: this.frmUpdateUser.getRawValue(),
         })
         .subscribe({
-          next: (data) => {
-            console.log(data);
-            this.router.navigate(['dashboard/users/list']);
-          },
+          next: (data) => this.router.navigate(['dashboard/users/list']),
           error: (err) => console.log(err),
         });
     });
+    setTimeout(() => {
+      subParams.unsubscribe();
+      subUpdate.unsubscribe();
+    }, 500);
   }
+  //#endregion
 
   convertSelectsValuesToNumber(): void {
     this.frmUpdateUser.controls['role'].setValue(
