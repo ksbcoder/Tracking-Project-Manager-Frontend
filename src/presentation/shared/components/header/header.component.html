@@ -27,6 +27,14 @@
             <li><a class="dropdown-item" [routerLink]="routeListUsers">Functions</a></li>
           </ul>
         </li>
+        <li *sofkaShowForRoles="[1]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Inscriptions
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListInscriptions">Functions</a></li>
+          </ul>
+        </li>
       </ul>
       <span class="text-light me-5">¡Hi! {{userName}} </span>
       <button class="btn btn-general text-light" (click)="logout()"><i class="bi bi-box-arrow-right">

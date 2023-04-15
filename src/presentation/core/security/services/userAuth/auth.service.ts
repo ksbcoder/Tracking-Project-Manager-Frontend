@@ -182,7 +182,6 @@ export class AuthService {
       const result = await this.afAuth.signInWithPopup(provider);
       this.clearLocalStorage();
       localStorage.setItem('user', JSON.stringify(result.user));
-      console.log(result.user?.displayName);
       localStorage.setItem('uidUser', result.user?.uid as string);
 
       await new Promise((resolve) => setTimeout(resolve, 50));

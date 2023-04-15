@@ -11,6 +11,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { UserModule } from 'src/data/repositories/user/user.module';
 import { ProjectModule } from 'src/data/repositories/project/project.module';
+import { InscriptionModule } from 'src/data/repositories/inscription/inscription.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { ProjectModule } from 'src/data/repositories/project/project.module';
     CommonModule,
     UserModule,
     ProjectModule,
+    InscriptionModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

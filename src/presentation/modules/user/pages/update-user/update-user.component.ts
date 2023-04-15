@@ -74,7 +74,7 @@ export class UpdateUserComponent implements OnInit {
     this.convertSelectsValuesToNumber();
     let subUpdate: any;
     let subParams = this.route.params.subscribe((params) => {
-      this.updateUser
+      subUpdate = this.updateUser
         .execute({
           uidUser: params['id'],
           user: this.frmUpdateUser.getRawValue(),

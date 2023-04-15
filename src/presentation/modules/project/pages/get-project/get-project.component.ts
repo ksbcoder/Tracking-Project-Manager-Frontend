@@ -74,6 +74,6 @@ export class GetProjectComponent implements OnInit {
   //#endregion
 
   dateToString(date: Date): string {
-    return new Date(date).toISOString().substring(0, 10);
+    return date ? new Date(date).toISOString().substring(0, 10) : '';
   }
 }

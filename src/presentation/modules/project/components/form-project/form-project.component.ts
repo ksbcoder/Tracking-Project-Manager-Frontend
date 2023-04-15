@@ -83,7 +83,6 @@ export class FormProjectComponent implements OnInit {
           .execute(this.projectToCreate)
           .subscribe({
             next: (data) => {
-              console.log(data);
               this.router.navigate(['../list'], { relativeTo: this.route });
             },
             error: (err) => console.log(err),

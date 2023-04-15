@@ -60,6 +60,18 @@ const routes: Routes = [
   },
 
   {
+    path: 'dashboard/inscriptions', // localhost:4200/dashboard/inscriptions
+    canActivate: [AngularFireAuthGuard],
+    loadChildren: () =>
+      import('../../../../modules/inscription/inscription.module').then(
+        (module) => module.InscriptionModule
+      ),
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
+  },
+
+  {
     path: '**',
     component: LoginComponent,
   },

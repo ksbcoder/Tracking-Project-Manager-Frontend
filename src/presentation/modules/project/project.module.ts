@@ -14,7 +14,13 @@ import { UpdateProjectComponent } from './pages/update-project/update-project.co
 import { GetProjectComponent } from './pages/get-project/get-project.component';
 
 @NgModule({
-  declarations: [ListProjectsComponent, CreateProjectComponent, FormProjectComponent, UpdateProjectComponent, GetProjectComponent],
+  declarations: [
+    ListProjectsComponent,
+    CreateProjectComponent,
+    FormProjectComponent,
+    UpdateProjectComponent,
+    GetProjectComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -22,8 +28,6 @@ import { GetProjectComponent } from './pages/get-project/get-project.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
   ],
 })
 export class ProjectModule {}

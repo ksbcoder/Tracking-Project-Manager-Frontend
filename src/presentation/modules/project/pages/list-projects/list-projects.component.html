@@ -44,13 +44,13 @@
               <td>{{item.completedAt | date }}</td>
               <td>{{item.stateProject | enumsNumberToStringPipe: 'stateProject' }}</td>
               <td>
-                <button class="btn btn-sm btn-outline-teal text-light shadow me-1" data-bs-toggle="modal"
-                  data-bs-target="#modal-update" (click)="modal(item.projectID, item.name)"
+                <button *sofkaShowForRoles="[1]" class="btn btn-sm btn-outline-teal text-light shadow me-1"
+                  data-bs-toggle="modal" data-bs-target="#modal-open" (click)="modal(item.projectID, item.name)"
                   [hidden]="item.openDate !== null">
                   <i class="bi bi-folder2-open"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-pink text-light shadow me-1" data-bs-toggle="modal"
-                  data-bs-target="#modal-complete" (click)="modal(item.projectID, item.name)"
+                <button *sofkaShowForRoles="[1]" class="btn btn-sm btn-outline-pink text-light shadow me-1"
+                  data-bs-toggle="modal" data-bs-target="#modal-complete" (click)="modal(item.projectID, item.name)"
                   [hidden]="item.phase === null || item.stateProject !== 0">
                   <i class=" bi bi-folder2"></i>
                 </button>
@@ -58,13 +58,19 @@
                   [routerLink]="['../detail', item.projectID]">
                   <i class=" bi bi-eye"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-warning bg-opacity-75 me-1 text-light shadow"
+                <button *sofkaShowForRoles="[2]" class="btn btn-sm btn-outline-teal text-light shadow me-1"
+                  data-bs-toggle="modal" data-bs-target="#modal-inscription" (click)="modal(item.projectID, item.name)">
+                  <!-- se oculta cuando ya esta inscrito -->
+                  <i class=" bi bi-person-plus"></i>
+                </button>
+                <button *sofkaShowForRoles="[1]"
+                  class="btn btn-sm btn-outline-warning bg-opacity-75 me-1 text-light shadow"
                   [routerLink]="['../update', item.projectID]"
                   [hidden]="item.openDate === null || item.completedAt !== null">
                   <i class="bi bi-pencil-fill"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger text-light shadow" data-bs-toggle="modal"
-                  data-bs-target="#modal-delete" (click)="modal(item.projectID, item.name)">
+                <button *sofkaShowForRoles="[1]" class="btn btn-sm btn-outline-danger text-light shadow"
+                  data-bs-toggle="modal" data-bs-target="#modal-delete" (click)="modal(item.projectID, item.name)">
                   <i class="bi bi-trash3"></i>
                 </button>
               </td>
@@ -74,69 +80,89 @@
       </table>
     </div>
   </div>
+</div>
 
-  <!-- Modal Update -->
-  <div class="modal fade" id="modal-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
-          <h1 class="modal-title fs-5" id="update"> ¿Are you sure to open <strong>{{name}}</strong> project?
-          </h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body bg-dark text-light">
-          <form id="frmUpdate" (ngSubmit)="openProject()" [formGroup]="frmUpdate">
-            <div class="mb-3">
-              <label for="deadline" class="form-label">Please choose deadline</label>
-              <input class="form-control" type="date" name="deadline" id="deadline" formControlName="deadline">
-            </div>
-            <div class="alert alert-warning p-1 m-1 mt-1 ms-2" role="alert"
-              *ngIf="frmUpdate.get('deadline')?.hasError('required') && frmUpdate.get('deadline')?.touched">
-              You must indicate the open date project.
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer bg-dark text-light">
-          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
-          <button type="submit" form="frmUpdate" [disabled]="frmUpdate.invalid" class="btn btn-outline-teal text-light"
-            data-bs-dismiss="modal">Open</button>
-        </div>
+<!-- Modal Open Project -->
+<div class="modal fade" id="modal-open" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h1 class="modal-title fs-5" id="update"> Are you sure to open <strong>{{name}}</strong> project?
+        </h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light">
+        <form id="frmUpdate" (ngSubmit)="openProject()" [formGroup]="frmUpdate">
+          <div class="mb-3">
+            <label for="deadline" class="form-label">Please choose deadline</label>
+            <input class="form-control" type="date" name="deadline" id="deadline" formControlName="deadline">
+          </div>
+          <div class="alert alert-warning p-1 m-1 mt-1 ms-2" role="alert"
+            *ngIf="frmUpdate.get('deadline')?.hasError('required') && frmUpdate.get('deadline')?.touched">
+            You must indicate the open date project.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-dark text-light">
+        <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+        <button type="submit" form="frmUpdate" [disabled]="frmUpdate.invalid" class="btn btn-outline-teal text-light"
+          data-bs-dismiss="modal">Open</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal complete -->
-  <div class="modal fade" id="modal-complete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
-          <h1 class="modal-title fs-5" id="delete"> ¿Are you sure to complete <strong>{{name}}</strong> project?
-          </h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-footer bg-dark text-light">
-          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
-          <a type="button" class="btn btn-outline-pink text-light" (click)="completeProject(projectID)"
-            data-bs-dismiss="modal">Complete</a>
-        </div>
+<!-- Modal complete -->
+<div class="modal fade" id="modal-complete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h1 class="modal-title fs-5" id="complete"> Are you sure to complete <strong>{{name}}</strong> project?
+        </h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer bg-dark text-light">
+        <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+        <a type="button" class="btn btn-outline-pink text-light" (click)="completeProject(projectID)"
+          data-bs-dismiss="modal">Complete</a>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal delete -->
-  <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
-          <h1 class="modal-title fs-5" id="delete"> ¿Are you sure to delete <strong>{{name}}</strong> project?
-          </h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-footer bg-dark text-light">
-          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
-          <a type="button" class="btn btn-outline-danger text-light" (click)="deleteProject(projectID)"
-            data-bs-dismiss="modal">Delete</a>
-        </div>
+<!-- Modal delete -->
+<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h1 class="modal-title fs-5" id="delete"> Are you sure to delete <strong>{{name}}</strong> project?
+        </h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer bg-dark text-light">
+        <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+        <a type="button" class="btn btn-outline-danger text-light" (click)="deleteProject(projectID)"
+          data-bs-dismiss="modal">Delete</a>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal inscription -->
+<div class="modal fade" id="modal-inscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h1 class="modal-title fs-5" id="inscription"> Are you sure you want to sign up for <strong>{{name}}</strong>
+          project?
+        </h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer bg-dark text-light">
+        <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+        <a type="button" class="btn btn-outline-teal text-light" (click)="joinToProject(projectID)"
+          data-bs-dismiss="modal">Join</a>
+      </div>
+    </div>
+  </div>
+</div>

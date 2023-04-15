@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   routeListUsers: string[];
   routeListProjects: string[];
+  routeListInscriptions: string[];
   // state: boolean;
   userName!: string | null;
 
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
   ) {
     this.routeListUsers = ['users/list'];
     this.routeListProjects = ['projects/list'];
+    this.routeListInscriptions = ['inscriptions/list'];
     // this.state = this.state$.State;
   }
 

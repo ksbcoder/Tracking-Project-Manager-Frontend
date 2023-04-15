@@ -6,6 +6,11 @@ import { OpenProjectUseCase } from '../../../../../bussiness/useCases/project/op
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DeleteProjectUseCase } from 'src/bussiness/useCases/project/deleteProject.usecase';
 import { CompleteProjectUseCase } from '../../../../../bussiness/useCases/project/completeProject.usecase';
+import { GetActiveProjectsUseCase } from 'src/bussiness/useCases/project/getActiveProjects.usecase';
+import { InscriptionModel } from 'src/domain/models/inscription/inscription.model';
+import { GetInscriptionByUserIdUseCase } from 'src/bussiness/useCases/inscription/getInscriptionByUserId.usecase';
+import { CreateInscriptionUseCase } from 'src/bussiness/useCases/inscription/createInscription.usecase';
+import { NewInscriptionCommand } from 'src/domain/commands/inscription/newInscriptionCommand';
 
 @Component({
   selector: 'sofka-list-projects',
@@ -19,9 +24,13 @@ export class ListProjectsComponent implements OnInit {
 
   //variables
   projectsList: ProjectModel[];
+  inscription!: InscriptionModel;
+  inscriptionToCreate!: NewInscriptionCommand;
   empty: boolean;
   opened: boolean;
   frmUpdate: FormGroup;
+  role: string;
+  uidUser: string;
 
   //variables to emmit
 
@@ -33,9 +42,12 @@ export class ListProjectsComponent implements OnInit {
   //#region constructor
   constructor(
     private getProjectsByLeader: GetProjectsByLeaderIdUseCase,
+    private getActiveProjectsUseCase: GetActiveProjectsUseCase,
     private openProjectUseCase: OpenProjectUseCase,
     private completeProjectUseCase: CompleteProjectUseCase,
-    private deleteProjectUseCase: DeleteProjectUseCase
+    private deleteProjectUseCase: DeleteProjectUseCase,
+    private getInscriptionByUserUseCase: GetInscriptionByUserIdUseCase,
+    private createInscription: CreateInscriptionUseCase
   ) {
     this.frmUpdate = new FormGroup({
       deadline: new FormControl('', [Validators.required]),
@@ -46,12 +58,23 @@ export class ListProjectsComponent implements OnInit {
     this.empty = false;
     this.opened = false;
     this.openProjectCommand = new OpenProjectCommand(new Date());
+    this.role = localStorage.getItem('role') || '';
+    this.uidUser = localStorage.getItem('uidUser') || '';
   }
   //#endregion
 
   //#region ngOnInit
   ngOnInit(): void {
-    this.getProjectsByLeaderID();
+    switch (this.role) {
+      case '1':
+        this.getProjectsByLeaderID();
+        break;
+      case '2':
+        this.getActiveProjects();
+        break;
+      default:
+        break;
+    }
   }
   //#endregion
 
@@ -74,7 +97,7 @@ export class ListProjectsComponent implements OnInit {
       });
     setTimeout(() => {
       subOpen.unsubscribe();
-    }, 500);
+    }, 1000);
   }
   //#endregion
 
@@ -86,7 +109,7 @@ export class ListProjectsComponent implements OnInit {
     });
     setTimeout(() => {
       subComplete.unsubscribe();
-    }, 500);
+    }, 1000);
   }
   //#endregion
 
@@ -98,7 +121,26 @@ export class ListProjectsComponent implements OnInit {
     });
     setTimeout(() => {
       subDelete.unsubscribe();
-    }, 500);
+    }, 1000);
+  }
+  //#endregion
+
+  //#region inscription with modal
+  joinToProject(projectID: string): void {
+    this.inscriptionToCreate = new NewInscriptionCommand(
+      projectID,
+      this.uidUser
+    );
+    let subInscription = this.createInscription
+      .execute(this.inscriptionToCreate)
+      .subscribe({
+        next: (data) => this.ngOnInit(),
+        //toast para que ya esta registrada
+        error: (err) => console.log(err),
+      });
+    setTimeout(() => {
+      subInscription.unsubscribe();
+    }, 1000);
   }
   //#endregion
 
@@ -117,7 +159,39 @@ export class ListProjectsComponent implements OnInit {
     });
     setTimeout(() => {
       subGet.unsubscribe();
-    }, 500);
+    }, 1000);
+  }
+
+  getActiveProjects(): void {
+    let subGet = this.getActiveProjectsUseCase.execute().subscribe({
+      next: (data) => {
+        this.projectsList = data;
+        this.empty = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.empty = true;
+      },
+    });
+    setTimeout(() => {
+      subGet.unsubscribe();
+    }, 1000);
+  }
+
+  getInscriptionByUser(): void {
+    let idUser = localStorage.getItem('uidUser') as string;
+    let subGet = this.getInscriptionByUserUseCase.execute(idUser).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.inscription = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    setInterval(() => {
+      subGet.unsubscribe();
+    }, 1000);
   }
   //#endregion
 }
