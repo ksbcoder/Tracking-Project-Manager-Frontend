@@ -16,11 +16,12 @@
 
 .body {
   height: 100%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Cairo', sans-serif;
 }
 
 .titles {
   color: $orange-500;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .bg-container-or-form {
@@ -33,6 +34,7 @@
   background-size: 200% 100%;
   background-position: right bottom;
   transition: all 0.2s ease-in-out;
+  color: $white;
 
   &:hover {
     background-position: left bottom;

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class BackButtonComponent implements OnInit {
   //rutas
-  @Input() routeDashboard!: string[];
+  @Input() routeBack!: string[];
   @Output() valueResponse: EventEmitter<string> = new EventEmitter();
 
   constructor(private router: Router) {}

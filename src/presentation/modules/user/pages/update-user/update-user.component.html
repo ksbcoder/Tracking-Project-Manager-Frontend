@@ -1,6 +1,6 @@
 <div class="row m-4 text-light">
   <div class="col col-lg-1">
-    <sofka-back-button [routeDashboard]="routeListUsers"></sofka-back-button>
+    <sofka-back-button [routeBack]="routeListUsers"></sofka-back-button>
   </div>
   <div class="row m-3">
     <div class="col col-lg-1"></div>
@@ -83,7 +83,7 @@
               <option value="2">Contributor</option>
             </select>
             <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
-              *ngIf="frmUpdateUser.get('role')?.hasError('role') && frmUpdateUser.get('role')?.touched">
+              *ngIf="frmUpdateUser.get('role')?.hasError('required') && frmUpdateUser.get('role')?.touched">
               Choose a role.
             </div>
           </div>
@@ -97,7 +97,7 @@
               <option value="2">Eliminated</option>
             </select>
             <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
-              *ngIf="frmUpdateUser.get('stateUser')?.hasError('stateUser') && frmUpdateUser.get('stateUser')?.touched">
+              *ngIf="frmUpdateUser.get('stateUser')?.hasError('required') && frmUpdateUser.get('stateUser')?.touched">
               Choose a state.
             </div>
           </div>

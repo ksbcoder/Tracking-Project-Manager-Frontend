@@ -5,6 +5,7 @@ import {
   StateTask,
   StateInscription,
   Priority,
+  StateProject,
 } from '../../../../base/utils/enums';
 
 @Pipe({
@@ -12,7 +13,13 @@ import {
 })
 export class EnumsNumberToStringPipe implements PipeTransform {
   transform(
-    value: Roles | Phase | StateTask | Priority | StateInscription,
+    value:
+      | Roles
+      | Phase
+      | StateTask
+      | Priority
+      | StateInscription
+      | StateProject,
     type: keyof EnumValues
   ): string {
     const values = ROLE_VALUES[type].split(',');
@@ -26,6 +33,7 @@ export interface EnumValues {
   stateTask: string;
   priority: string;
   stateInscription: string;
+  stateProject: string;
 }
 
 const ROLE_VALUES: EnumValues = {
@@ -34,4 +42,5 @@ const ROLE_VALUES: EnumValues = {
   stateTask: 'Active,Assigned,Completed,Deleted',
   priority: 'Low,Medium,High',
   stateInscription: 'Pending,Approved,Denied,Deleted',
+  stateProject: 'Active,Inactive,Deleted',
 };
