@@ -1,1 +1,106 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import 'ngx-toastr/toastr';
+
+.header {
+  font-size: larger;
+  background-color: $gray-800;
+  font-family: 'Cairo', sans-serif;
+}
+
+.footer {
+  background-color: $gray-800;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.body {
+  height: 100%;
+  font-family: 'Cairo', sans-serif;
+}
+
+.titles {
+  color: $orange-500;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.bg-container-or-form {
+  background-color: $gray-800;
+  color: $white;
+}
+
+.bg-card-dashboard {
+  background-color: $gray-800;
+  color: $white;
+}
+
+.bg-progress-bar {
+  background-color: $indigo-600;
+  color: $white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.size-progress-bar {
+  height: 25px;
+}
+
+.btn-general {
+  background: linear-gradient(200deg, $orange-500 0%, $orange-700 100%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.2s ease-in-out;
+  color: $white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+
+  &:hover {
+    background-position: left bottom;
+    color: $white;
+  }
+}
+
+.btn-action {
+  background: linear-gradient(200deg, $indigo-400 30%, $indigo-600 100%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.2s ease-in-out;
+  color: $white;
+
+  &:hover {
+    background-position: left bottom;
+    color: $white;
+  }
+}
+
+.btn-outline-teal {
+  color: $teal-400;
+  background-color: transparent;
+  background-image: none;
+  border-color: $teal-400;
+}
+
+.btn-outline-teal:hover {
+  color: $teal-500;
+  background-color: $teal-500;
+  border-color: $teal-500;
+}
+
+.btn-outline-pink {
+  color: $pink-400;
+  background-color: transparent;
+  background-image: none;
+  border-color: $pink-400;
+}
+
+.btn-outline-pink:hover {
+  color: $pink-500;
+  background-color: $pink-500;
+  border-color: $pink-500;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&family=Ubuntu:ital,wght@0,300;0,400;1,300&display=swap');

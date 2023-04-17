@@ -1,0 +1,104 @@
+<div *ngIf="!render" class="spinner-grow text-light position-absolute top-50 start-50 min-vw-75 min-vh-75"
+  role="status">
+</div>
+<div *ngIf="render">
+  <div class="row m-4">
+    <div class="col col-lg-1">
+      <sofka-back-button [routeBack]="routeDashboard"></sofka-back-button>
+    </div>
+  </div>
+  <div class="col m-5 mt-0 text-light">
+    <div class="row">
+      <div class="col">
+        <h2 class="mb-4">Inscriptions pending</h2>
+      </div>
+      <div class=" table-responsive">
+        <table class="table table-dark table-hover">
+          <caption>
+            Inscriptions pending
+          </caption>
+          <thead class="text-center">
+            <tr class=" text-light">
+              <th scope="col">Inscription date</th>
+              <th scope="col">State</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider text-light text-center">
+            <tr *ngIf=" empty;else datos" class="text-center">
+              <th colspan="3">No hay elementos para mostrar</th>
+            </tr>
+            <ng-template #datos class="text-light">
+              <tr *ngFor="let item of inscriptionsList">
+                <td>{{item.createdAt | date }}</td>
+                <td>{{item.stateInscription | enumsNumberToStringPipe: 'stateInscription' }}</td>
+                <td>
+                  <button *sofkaShowForRoles="[1]" class="btn btn-sm btn-outline-info text-light shadow me-1"
+                    data-bs-toggle="modal" data-bs-target="#modal-inscription" (click)="modal(item.inscriptionID)">
+                    <i class="bi bi-question-lg"></i>
+                  </button>
+                  <button *sofkaShowForRoles="[1]" class="btn btn-sm btn-outline-danger text-light shadow"
+                    data-bs-toggle="modal" data-bs-target="#modal-delete-inscription"
+                    (click)="modal(item.inscriptionID)">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Respond Inscription -->
+  <div class="modal fade" id="modal-inscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h1 class="modal-title fs-5" id="update"> Please choose a response
+          </h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-dark text-light">
+          <form id="frmInscription" (ngSubmit)="respondInscription()" [formGroup]="frmInscription">
+            <select class="form-control bg-dark text-light" name="stateInscription" id="stateInscription"
+              formControlName="stateInscription">
+              <option value="" selected>Choose one...</option>
+              <option value="1">Approved</option>
+              <option value="2">Denied</option>
+            </select>
+            <p class="text-warning ms-4" role="alert"
+              *ngIf="frmInscription.get('stateInscription')?.hasError('required') && frmInscription.get('stateInscription')?.touched">
+              Choose a state.
+            </p>
+          </form>
+        </div>
+        <div class="modal-footer bg-dark text-light">
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+          <button type="submit" form="frmInscription" [disabled]="frmInscription.invalid"
+            class="btn btn-outline-info text-light" data-bs-dismiss="modal">Respond</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal delete inscription -->
+  <div class="modal fade" id="modal-delete-inscription" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h1 class="modal-title fs-5" id="delete"> Are you sure to delete this inscription?
+          </h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-footer bg-dark text-light">
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
+          <a type="button" class="btn btn-outline-danger text-light" (click)="deleteInscription(inscriptionID)"
+            data-bs-dismiss="modal">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

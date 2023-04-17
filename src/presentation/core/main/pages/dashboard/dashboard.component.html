@@ -1,0 +1,34 @@
+<div *ngIf="!render" class="spinner-grow text-light position-absolute top-50 start-50 min-vw-75 min-vh-75"
+  role="status">
+</div>
+<div *ngIf="render" class="row pt-1 ps-3 pe-3 ms-3 me-2">
+  <div class="col-12 mt-3">
+    <h1 class="text-light mb-4" style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Dashboard</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div *ngFor="let project of projects" class="col">
+        <div class="card h-100 bg-card-dashboard">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{project.name}}</strong></h5>
+            <p class="card-text">{{project.description}}</p>
+            <hr>
+            <div class="row">
+              <p class="card-text col-6"><strong>Open date:</strong> {{project.openDate | date: 'dd/MM/yyyy'}}</p>
+              <p class="card-text col-6"><strong>Deadline date:</strong> {{project.deadLine | date: 'dd/MM/yyyy'}}</p>
+            </div>
+            <p class="card-text text-center"><strong>Completed at:</strong> {{project.completedAt | date: 'dd/MM/yyyy'}}
+            </p>
+            <hr>
+            <div class="progress size-progress-bar">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-progress-bar" role="progressbar"
+                aria-label="Animated striped example" [ariaValueNow]="project.efficiencyRate" aria-valuemin="0"
+                aria-valuemax="100" style="width: {{project.efficiencyRate}}%">
+                {{project.efficiencyRate}}%
+              </div>
+            </div>
+            <p class="card-text text-center mt-2"><strong>Efficiency rate</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

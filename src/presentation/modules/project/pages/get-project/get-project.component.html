@@ -1,0 +1,100 @@
+<div *ngIf="!render" class="spinner-grow text-light position-absolute top-50 start-50 min-vw-75 min-vh-75"
+  role="status">
+</div>
+<div *ngIf="render">
+  <div class="row m-4">
+    <div class="col col-lg-1">
+      <sofka-back-button [routeBack]="routeList"></sofka-back-button>
+    </div>
+  </div>
+  <div class="row m-4 text-light">
+    <div class="row m-3">
+      <div class="col col-lg-1"></div>
+      <div class="col col-10">
+        <h3>Project: {{ project.name }}</h3>
+        <div class="text-center">
+          <form id="frmViewProject"
+            class="form-control bg-container-or-form mt-3 p-4 border-0 text-start text-light shadow-lg">
+            <div class="row ms-2">
+              <div class="col col-md-6">
+                <div class="mb-3 row">
+                  <label for="Name" class="col-sm-3 col-form-label">Name</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="Name" name="name"
+                      [value]="project.name" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="Description" class="col-sm-3 col-form-label">Description</label>
+                  <div class="col">
+                    <textarea type="text" class="form-control bg-dark text-light" id="Description" name="description"
+                      [value]="project.description" readonly>
+                              </textarea>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="Leader" class="col-sm-3 col-form-label">Leader</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="Leader" name="description"
+                      [value]="leader.userName" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="CreatedAt" class="col-sm-3 col-form-label">Created At</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="CreatedAt" name="createdAt"
+                      [value]="createdAt" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="OpenDate" class="col-sm-3 col-form-label">Open date</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="OpenDate" name="openDate"
+                      [value]="openDate" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="mb-3 row">
+                  <label for="Deadline" class="col-sm-3 col-form-label">Deadline</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="Deadline" name="deadLine"
+                      [value]="deadLine" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="CompletedAt" class="col-sm-3 col-form-label">Completed At</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="CompletedAt" name="completedAt"
+                      [value]="completedAt" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="EfficiencyRate" class="col-sm-3 col-form-label">Efficiency rate</label>
+                  <div class="col">
+                    <input type="number" class="form-control bg-dark text-light" id="EfficiencyRate"
+                      name="efficiencyRate" [value]="project.efficiencyRate" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="Phase" class="col-sm-3 col-form-label">Phase</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="Phase" name="phase"
+                      [value]="project.phase | enumsNumberToStringPipe: 'phase'" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="StateProject" class="col-sm-3 col-form-label">State</label>
+                  <div class="col">
+                    <input type="text" class="form-control bg-dark text-light" id="StateProject" name="stateProject"
+                      [value]="project.stateProject | enumsNumberToStringPipe: 'stateProject'" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

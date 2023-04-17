@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark">
+  <div class="container-fluid ps-sm-5">
+    <a class="navbar-brand text-light" (click)="redirectToDashboard()">
+      <strong>
+        <h2 class="titles">TPM</h2>
+      </strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" ddata-bs-target="#navbarNavDarkDropdown"
+      data-bs-offset="10,20" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse pe-sm-4" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+        <li *sofkaShowForRoles="[1, 2]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Projects
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListProjects">Functions</a></li>
+          </ul>
+        </li>
+        <li *sofkaShowForRoles="[1, 2]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tasks
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListTasks">Functions</a></li>
+          </ul>
+        </li>
+        <li *sofkaShowForRoles="[1]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Users
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListUsers">Functions</a></li>
+          </ul>
+        </li>
+        <li *sofkaShowForRoles="[1]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Inscriptions
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListInscriptions">Functions</a></li>
+          </ul>
+        </li>
+      </ul>
+      <span class="text-light me-5">¡Hi! {{userName}} </span>
+      <button class="btn btn-general text-light" (click)="logout()"><i class="bi bi-box-arrow-right">
+          LogOut</i></button>
+    </div>
+  </div>
+</nav>
