@@ -30,9 +30,9 @@ export class ListUsersComponent implements OnInit {
         console.log(err);
         this.empty = true;
       },
+      complete: () => {
+        subGet.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subGet.unsubscribe();
-    }, 500);
   }
 }

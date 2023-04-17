@@ -27,29 +27,29 @@ export class GetProjectComponent implements OnInit {
   constructor(
     private getProjectById: GetProjectByIdUseCase,
     private getLeaderById: GetUserByIdUseCase,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {
     this.routeList = ['../../list'];
     this.getProject();
     setTimeout(() => {
       this.getLeader(this.project.leaderID);
     }, 100);
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
 
-  ngOnInit(): void {
-    setTimeout(() => {}, 1000);
-  }
+  ngOnInit(): void {}
 
   //#region consults
   getLeader(uidUser: string): void {
     let subGet = this.getLeaderById.execute(uidUser).subscribe({
       next: (data) => (this.leader = data),
       error: (err) => console.log(err),
+      complete: () => {
+        subGet.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subGet.unsubscribe();
-    }, 500);
   }
 
   getProject(): void {
@@ -64,12 +64,11 @@ export class GetProjectComponent implements OnInit {
             (this.completedAt = this.dateToString(data.completedAt));
         },
         error: (err) => console.log(err),
+        complete: () => {
+          subParams.unsubscribe(), subUpdate.unsubscribe();
+        },
       });
     });
-    setTimeout(() => {
-      subParams.unsubscribe();
-      subUpdate.unsubscribe();
-    }, 600);
   }
   //#endregion
 

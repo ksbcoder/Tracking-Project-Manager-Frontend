@@ -60,12 +60,12 @@ export class UpdateUserComponent implements OnInit {
           });
         },
         error: (err) => console.log(err),
+        complete: () => {
+          subGet.unsubscribe();
+          subParams.unsubscribe();
+        },
       });
     });
-    setTimeout(() => {
-      subParams.unsubscribe();
-      subGet.unsubscribe();
-    }, 500);
   }
   //#endregion
 
@@ -80,14 +80,15 @@ export class UpdateUserComponent implements OnInit {
           user: this.frmUpdateUser.getRawValue(),
         })
         .subscribe({
-          next: (data) => this.router.navigate(['dashboard/users/list']),
+          next: (data) =>
+            this.router.navigate(['../../list'], { relativeTo: this.route }),
           error: (err) => console.log(err),
+          complete: () => {
+            subUpdate.unsubscribe();
+            subParams.unsubscribe();
+          },
         });
     });
-    setTimeout(() => {
-      subParams.unsubscribe();
-      subUpdate.unsubscribe();
-    }, 500);
   }
   //#endregion
 

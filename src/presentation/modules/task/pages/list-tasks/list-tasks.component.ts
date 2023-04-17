@@ -24,6 +24,7 @@ export class ListTasksComponent implements OnInit {
   selectedUserAssign: string = '';
 
   //variables
+  render!: boolean;
   tasksList: TaskModel[];
   frmTask: FormGroup;
   empty: boolean;
@@ -55,6 +56,9 @@ export class ListTasksComponent implements OnInit {
     this.frmTask = new FormGroup({
       assignedTo: new FormControl('', [Validators.required]),
     });
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
   //#endregion
 
@@ -62,7 +66,6 @@ export class ListTasksComponent implements OnInit {
   ngOnInit(): void {
     switch (this.role) {
       case '1':
-        // this.getUnassignedTasks(this.leaderID);
         this.getUsers();
         this.getAllTasks();
         break;
@@ -164,17 +167,13 @@ export class ListTasksComponent implements OnInit {
 
   getUsers() {
     let subGetUsers = this.getUsersUseCase.execute().subscribe({
-      next: (data) => {
-        this.users = data;
-        console.log(data);
-      },
+      next: (data) => (this.users = data),
       error: (err) => console.log(err),
       complete: () => {
         subGetUsers.unsubscribe();
         this.users.forEach((user) => {
           let pos = this.users.indexOf(user);
           if (user.role == 1 || user.role == 0) {
-            console.log('este juera ' + user.userName);
             this.users.splice(pos, 1);
           }
         });

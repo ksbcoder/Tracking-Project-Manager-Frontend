@@ -20,6 +20,7 @@ export class FormTaskComponent implements OnInit {
   @Input() formType!: string;
 
   //variables
+  render!: boolean;
   frmTask: FormGroup;
 
   //variables select projects
@@ -61,6 +62,9 @@ export class FormTaskComponent implements OnInit {
       assignedTo: new FormControl(''),
       assignedAt: new FormControl(''),
     });
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
   //#endregion
 
@@ -74,6 +78,8 @@ export class FormTaskComponent implements OnInit {
       let subParams = this.route.params.subscribe((params) => {
         subGet = this.getTaskByIdUseCase.execute(params['id']).subscribe({
           next: (data) => {
+            this.selectedProject = data.projectID;
+            this.selectedUser = data.assignedTo;
             this.frmTask.setValue({
               projectID: data.projectID,
               description: data.description,

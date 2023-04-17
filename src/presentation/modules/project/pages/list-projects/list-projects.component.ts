@@ -23,6 +23,7 @@ export class ListProjectsComponent implements OnInit {
   routeCreate: string[];
 
   //variables
+  render!: boolean;
   projectsList: ProjectModel[];
   inscription!: InscriptionModel;
   inscriptionToCreate!: NewInscriptionCommand;
@@ -60,6 +61,9 @@ export class ListProjectsComponent implements OnInit {
     this.openProjectCommand = new OpenProjectCommand(new Date());
     this.role = localStorage.getItem('role') || '';
     this.uidUser = localStorage.getItem('uidUser') || '';
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
   //#endregion
 
@@ -94,10 +98,10 @@ export class ListProjectsComponent implements OnInit {
       .subscribe({
         next: (data) => this.ngOnInit(),
         error: (err) => console.log(err),
+        complete: () => {
+          subOpen.unsubscribe();
+        },
       });
-    setTimeout(() => {
-      subOpen.unsubscribe();
-    }, 1000);
   }
   //#endregion
 
@@ -106,10 +110,10 @@ export class ListProjectsComponent implements OnInit {
     let subComplete = this.completeProjectUseCase.execute(projectID).subscribe({
       next: (data) => this.ngOnInit(),
       error: (err) => console.log(err),
+      complete: () => {
+        subComplete.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subComplete.unsubscribe();
-    }, 1000);
   }
   //#endregion
 
@@ -118,10 +122,10 @@ export class ListProjectsComponent implements OnInit {
     let subDelete = this.deleteProjectUseCase.execute(projectID).subscribe({
       next: (data) => this.ngOnInit(),
       error: (err) => console.log(err),
+      complete: () => {
+        subDelete.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subDelete.unsubscribe();
-    }, 1000);
   }
   //#endregion
 
@@ -137,10 +141,10 @@ export class ListProjectsComponent implements OnInit {
         next: (data) => this.ngOnInit(),
         //toast para que ya esta registrada
         error: (err) => console.log(err),
+        complete: () => {
+          subInscription.unsubscribe();
+        },
       });
-    setTimeout(() => {
-      subInscription.unsubscribe();
-    }, 1000);
   }
   //#endregion
 
@@ -156,10 +160,10 @@ export class ListProjectsComponent implements OnInit {
         console.log(err);
         this.empty = true;
       },
+      complete: () => {
+        subGet.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subGet.unsubscribe();
-    }, 1000);
   }
 
   getActiveProjects(): void {
@@ -172,10 +176,10 @@ export class ListProjectsComponent implements OnInit {
         console.log(err);
         this.empty = true;
       },
+      complete: () => {
+        subGet.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subGet.unsubscribe();
-    }, 1000);
   }
 
   getInscriptionByUser(): void {
@@ -188,10 +192,10 @@ export class ListProjectsComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+      complete: () => {
+        subGet.unsubscribe();
+      },
     });
-    setInterval(() => {
-      subGet.unsubscribe();
-    }, 1000);
   }
   //#endregion
 }

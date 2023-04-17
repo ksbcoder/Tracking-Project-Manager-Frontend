@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateProjectUseCase } from 'src/bussiness/useCases/project/createProject.usecase';
@@ -16,6 +16,7 @@ export class FormProjectComponent implements OnInit {
   @Input() formType!: string;
 
   //variables
+  render!: boolean;
   frmProject: FormGroup;
   projectToCreate!: NewProjectCommand;
   projectToUpdate!: UpdateProjectCommand;
@@ -35,8 +36,11 @@ export class FormProjectComponent implements OnInit {
         Validators.minLength(10),
       ]),
       deadLine: new FormControl(''),
-      stateProject: new FormControl(''), //probar que valide de con la del html
+      stateProject: new FormControl(''),
     });
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
   //#endregion
 
@@ -58,12 +62,12 @@ export class FormProjectComponent implements OnInit {
             });
           },
           error: (err) => console.log(err),
+          complete: () => {
+            subParams.unsubscribe();
+            subGet.unsubscribe();
+          },
         });
       });
-      setTimeout(() => {
-        subParams.unsubscribe();
-        subGet.unsubscribe();
-      }, 500);
     }
   }
   //#endregion
@@ -86,10 +90,10 @@ export class FormProjectComponent implements OnInit {
               this.router.navigate(['../list'], { relativeTo: this.route });
             },
             error: (err) => console.log(err),
+            complete: () => {
+              subCreate.unsubscribe();
+            },
           });
-        setTimeout(() => {
-          subCreate.unsubscribe();
-        }, 600);
         break;
       case 'update':
         //project to update
@@ -114,12 +118,12 @@ export class FormProjectComponent implements OnInit {
                   relativeTo: this.route,
                 }),
               error: (err) => console.log(err),
+              complete: () => {
+                subParams.unsubscribe();
+                subUpdate.unsubscribe();
+              },
             });
         });
-        setTimeout(() => {
-          subParams.unsubscribe();
-          subUpdate.unsubscribe();
-        }, 600);
         break;
       default:
         break;

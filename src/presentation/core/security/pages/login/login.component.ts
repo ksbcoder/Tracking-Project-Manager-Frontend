@@ -11,22 +11,17 @@ export class LoginComponent implements OnInit {
   routeSingUp: string[];
   frmLogin: FormGroup;
   constructor(private readonly auth$: AuthService) {
+    this.clearLocalStorage();
     this.routeSingUp = ['sign-up'];
     this.frmLogin = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
     });
   }
-  ngOnInit(): void {
-    localStorage.removeItem('user');
-    localStorage.removeItem('uidUser');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('email');
-    localStorage.removeItem('efficiencyRate');
-    localStorage.removeItem('tasksCompleted');
-    localStorage.removeItem('role');
-    localStorage.removeItem('stateUser');
-  }
+  ngOnInit(): void {}
 
   auth(): void {
     this.auth$.GoogleAuth();
@@ -38,5 +33,16 @@ export class LoginComponent implements OnInit {
 
   signUp(user: string, password: string): void {
     this.auth$.SignUp(user, password);
+  }
+
+  clearLocalStorage(): void {
+    localStorage.removeItem('user');
+    localStorage.removeItem('uidUser');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('email');
+    localStorage.removeItem('efficiencyRate');
+    localStorage.removeItem('tasksCompleted');
+    localStorage.removeItem('role');
+    localStorage.removeItem('stateUser');
   }
 }

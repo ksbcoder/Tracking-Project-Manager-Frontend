@@ -6,35 +6,35 @@
           <h1 class="card-title mb-4 titles ">Tracking Project Manager</h1>
           <h6 class="card-subtitle mb-3 text-muted">Please log in with your account</h6>
           <div class="container-fluid p-3 rounded-3 mb-2">
-            <form id=" frmLogin" [attr.formgroup]="frmLogin" class="form-control bg-dark text-light border-0">
+            <form id="frmLogin" [formGroup]="frmLogin" class="form-control bg-dark text-light border-0">
               <div class="mb-3 mt-2 row">
-                <label for="Correo" class=" col-sm-3 col-form-label">Email</label>
+                <label for="email" class=" col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control bg-dark text-light" id="Correo" placeholder="email"
-                    formcontrolname=" email" name="email" #email required>
-                  <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                  <input class="form-control bg-dark text-light" type="text" name="email" id="email" placeholder="email"
+                    formControlName="email" #email>
+                  <p class="text-warning mt-1"
                     *ngIf="frmLogin.get('email')?.hasError('required') && frmLogin.get('email')?.touched">
-                    Debes indicar un correo electrónico
-                  </div> -->
-                  <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                    You must indicate your e-mail address.
+                  </p>
+                  <p class="text-warning mt-1"
                     *ngIf="frmLogin.get('email')?.hasError('email') && frmLogin.get('email')?.touched">
-                    El formato no coincide con un correo
-                  </div> -->
+                    The format does not match an e-mail address.
+                  </p>
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="password" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                  <input type="password" class="form-control bg-dark text-light" id="password" placeholder="password"
-                    formcontrolname=" password" name="password" #password required>
-                  <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
+                  <input type="password" class="form-control bg-dark text-light" name="password" id="password"
+                    placeholder="password" formControlName="password" #password required>
+                  <p class="text-warning mt-1"
                     *ngIf="frmLogin.get('password')?.hasError('required') && frmLogin.get('password')?.touched">
-                    Debes indicar el título de la tarea
-                  </div> -->
-                  <!-- <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                    *ngIf="frmLogin.get('password')?.hasError('pattern') && frmLogin.get('password')?.touched">
-                    La contraseña debe tener mínimo ocho caracteres
-                  </div> -->
+                    You must indicate your password.
+                  </p>
+                  <p class="text-warning mt-1"
+                    *ngIf="frmLogin.get('password')?.hasError('minLength') && frmLogin.get('password')?.touched">
+                    The password must be at least 8 characters long.
+                  </p>
                 </div>
               </div>
             </form>
@@ -43,7 +43,7 @@
               <i class="bi bi-box-arrow-in-right"> Sign In with email</i>
             </button>
           </div>
-          <span class="or"><span class=" orInner">O</span></span>
+          <span class="or"><span class=" orInner">Or</span></span>
           <div class="container px-4 mt-4">
             <div class="row">
               <div class="col">

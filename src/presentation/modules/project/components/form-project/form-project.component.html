@@ -1,80 +1,85 @@
-<div class="row m-4 text-light">
-  <div class="row m-3">
-    <div class="col col-lg-1"></div>
-    <div class="col col-10">
-      <h3 [hidden]="formType !== 'update'">Update project</h3>
-      <h3 [hidden]="formType !== 'create'">Create project</h3>
-      <div class="text-center">
-        <form id="frmProject" (ngSubmit)="sendData()" [formGroup]="frmProject"
-          class="form-control bg-container-or-form mt-3 p-3 border-0 text-start text-light shadow-lg">
-          <div class="mb-3 row">
-            <label for="Name" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control bg-dark text-light" id="Name" placeholder="name project"
-                formControlName="name" name="name">
-              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                *ngIf="frmProject.get('name')?.hasError('required') && frmProject.get('name')?.touched">
-                You must indicate the name of project.
-              </div>
-              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                *ngIf="frmProject.get('name')?.hasError('minlength') && frmProject.get('name')?.touched">
-                The name project must be 5 characters or longer.
-              </div>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="Description" class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-              <textarea type="text" class="form-control bg-dark text-light" id="Description"
-                placeholder="description project" formControlName="description" name="description">
-              </textarea>
-              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                *ngIf="frmProject.get('description')?.hasError('required') && frmProject.get('description')?.touched">
-                You must indicate the project description.
-              </div>
-              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                *ngIf="frmProject.get('description')?.hasError('minlength') && frmProject.get('description')?.touched">
-                The project description must be 10 characters or longer.
+<div *ngIf="render">
+  <div class="row m-4 text-light">
+    <div class="row m-3">
+      <div class="col col-lg-1"></div>
+      <div class="col col-10">
+        <h3 [hidden]="formType !== 'update'">Update project</h3>
+        <h3 [hidden]="formType !== 'create'">Create project</h3>
+        <div class="text-center">
+          <form id="frmProject" (ngSubmit)="sendData()" [formGroup]="frmProject"
+            class="form-control bg-container-or-form mt-3 p-3 border-0 text-start text-light shadow-lg">
+            <div class="mb-3 row">
+              <label for="Name" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control bg-dark text-light" id="Name" placeholder="name project"
+                  formControlName="name" name="name">
+                <p class="text-warning ms-4"
+                  *ngIf="frmProject.get('name')?.hasError('required') && frmProject.get('name')?.touched">
+                  You must indicate the name of project.
+                </p>
+                <p class="text-warning ms-4"
+                  *ngIf="frmProject.get('name')?.hasError('minlength') && frmProject.get('name')?.touched">
+                  The name project must be 5 characters or longer.
+                </p>
               </div>
             </div>
-          </div>
-          <div class="mb-3 row" [hidden]="formType === 'create'">
-            <label for="Deadline" class="col-sm-2 col-form-label">Deadline</label>
-            <div class="col-sm-3">
-              <input type="date" class="form-control bg-dark text-light" id="Deadline" formControlName="deadLine"
-                name="deadLine">
-              <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
-                *ngIf="frmProject.get('deadLine')?.hasError('required') && frmProject.get('deadLine')?.touched">
-                You must indicate the project deadLine.
+            <div class="mb-3 row">
+              <label for="Description" class="col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="text" class="form-control bg-dark text-light" id="Description"
+                  placeholder="description project" formControlName="description" name="description">
+                </textarea>
+                <p p class="text-warning ms-4"
+                  *ngIf="frmProject.get('description')?.hasError('required') && frmProject.get('description')?.touched">
+                  You must indicate the project description.
+                </p>
+                <p p class="text-warning ms-4"
+                  *ngIf="frmProject.get('description')?.hasError('minlength') && frmProject.get('description')?.touched">
+                  The project description must be 10 characters or longer.
+                </p>
               </div>
             </div>
-          </div>
-          <div class="mb-3 row" [hidden]="formType === 'create'">
-            <label for="StateProject" class="col-sm-2 col-form-label">State project</label>
-            <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
-              aria-label="Default select example" id="StateProject" formControlName="stateProject" name="stateProject">
-              <option value="" selected>Choose one...</option>
-              <option value="0">Active</option>
-              <option value="1">Inactive</option>
-              <option value="2">Deleted</option>
-            </select>
-            <div class="alert alert-danger p-1 m-1 mt-1 ms-2 w-50" role="alert"
-              *ngIf="frmProject.get('stateProject')?.hasError('required') && frmProject.get('stateProject')?.touched">
-              Choose a state.
+            <div class="mb-3 row" [hidden]="formType === 'create'">
+              <label for="Deadline" class="col-sm-2 col-form-label">Deadline</label>
+              <div class="col-sm-3">
+                <input type="date" class="form-control bg-dark text-light" id="Deadline" formControlName="deadLine"
+                  name="deadLine">
+                <p class="text-warning ms-4"
+                  *ngIf="frmProject.get('deadLine')?.hasError('required') && frmProject.get('deadLine')?.touched">
+                  You must indicate the project deadLine.
+                </p>
+              </div>
             </div>
-          </div>
-        </form>
+            <div class="mb-3 row" [hidden]="formType === 'create'">
+              <label for="StateProject" class="col-sm-2 col-form-label">State project</label>
+              <div class="col-sm-10">
+                <select class="form-control col me-sm-3 float-start bg-dark text-light"
+                  aria-label="Default select example" id="StateProject" formControlName="stateProject"
+                  name="stateProject" [required]="formType === 'update'">
+                  <option value="" selected>Choose one...</option>
+                  <option value="0">Active</option>
+                  <option value="1">Inactive</option>
+                  <option value="2">Deleted</option>
+                </select>
+                <p class="text-warning ms-4"
+                  *ngIf="frmProject.get('stateProject')?.hasError('required') && frmProject.get('stateProject')?.touched">
+                  Choose a state.
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="row m-3">
-  <div class="col col-lg-1"></div>
-  <div class="col col-10">
-    <button type="submit" form="frmProject" [disabled]="frmProject.invalid"
-      class="btn btn-action btn-lg shadow-lg bottom-0 end-0 float-end w-auto">
-      <i class="bi bi-arrow-repeat" [hidden]="formType !== 'update'"> Update</i>
-      <i class="bi bi-folder-plus" [hidden]="formType !== 'create'"> Create</i>
-    </button>
+  <div class="row m-3">
+    <div class="col col-lg-1"></div>
+    <div class="col col-10">
+      <button type="submit" form="frmProject" [disabled]="frmProject.invalid"
+        class="btn btn-action btn-lg shadow-lg bottom-0 end-0 float-end w-auto">
+        <i class="bi bi-arrow-repeat" [hidden]="formType !== 'update'"> Update</i>
+        <i class="bi bi-folder-plus" [hidden]="formType !== 'create'"> Create</i>
+      </button>
+    </div>
   </div>
 </div>
