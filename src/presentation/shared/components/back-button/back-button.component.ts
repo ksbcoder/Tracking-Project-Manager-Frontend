@@ -11,7 +11,7 @@ export class BackButtonComponent implements OnInit {
   @Input() routeBack!: string[];
   @Output() valueResponse: EventEmitter<string> = new EventEmitter();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
   ngOnInit(): void {
     this.valueResponse.emit('recibido');
   }
