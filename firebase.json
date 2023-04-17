@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "tracking-project-manage",
     "public": "dist/tracking-project-manager",
     "ignore": [
       "firebase.json",

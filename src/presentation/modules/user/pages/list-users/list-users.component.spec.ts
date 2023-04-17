@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { ListUsersComponent } from './list-users.component';
+import { GetUsersUseCase } from 'src/bussiness/useCases/user/getUsers.usecase';
+import { ToastrService } from 'ngx-toastr';
 
 describe('ListUsersComponent', () => {
   let component: ListUsersComponent;
@@ -11,9 +11,25 @@ describe('ListUsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListUsersComponent ]
+      declarations: [ListUsersComponent],
+      providers: [
+        {
+          provide: GetUsersUseCase, useValue: {
+            execute: () => {
+              return {
+                subscribe: () => { }
+              }
+            }
+          }
+        },
+        {
+          provide: ToastrService, useValue: {
+            success: () => { }
+          }
+        }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
