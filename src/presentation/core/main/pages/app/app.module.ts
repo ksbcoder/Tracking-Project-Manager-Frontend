@@ -12,16 +12,22 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { UserModule } from 'src/data/repositories/user/user.module';
 import { ProjectModule } from 'src/data/repositories/project/project.module';
 import { InscriptionModule } from 'src/data/repositories/inscription/inscription.module';
+import { TaskModule } from 'src/data/repositories/task/task.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from 'src/presentation/core/security/pages/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     CommonModule,
     UserModule,
     ProjectModule,
     InscriptionModule,
+    TaskModule,
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

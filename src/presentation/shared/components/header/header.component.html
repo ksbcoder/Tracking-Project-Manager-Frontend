@@ -19,6 +19,14 @@
             <li><a class="dropdown-item" [routerLink]="routeListProjects">Functions</a></li>
           </ul>
         </li>
+        <li *sofkaShowForRoles="[1, 2]" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tasks
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" [routerLink]="routeListTasks">Functions</a></li>
+          </ul>
+        </li>
         <li *sofkaShowForRoles="[1]" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Users

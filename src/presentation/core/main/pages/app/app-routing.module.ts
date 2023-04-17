@@ -72,6 +72,18 @@ const routes: Routes = [
   },
 
   {
+    path: 'dashboard/tasks', // localhost:4200/dashboard/tasks
+    canActivate: [AngularFireAuthGuard],
+    loadChildren: () =>
+      import('../../../../modules/task/task.module').then(
+        (module) => module.TaskModule
+      ),
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
+  },
+
+  {
     path: '**',
     component: LoginComponent,
   },

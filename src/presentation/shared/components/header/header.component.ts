@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   routeListUsers: string[];
   routeListProjects: string[];
   routeListInscriptions: string[];
+  routeListTasks: string[];
   // state: boolean;
   userName!: string | null;
 
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit {
     this.routeListUsers = ['users/list'];
     this.routeListProjects = ['projects/list'];
     this.routeListInscriptions = ['inscriptions/list'];
+    this.routeListTasks = ['tasks/list'];
     // this.state = this.state$.State;
   }
 
