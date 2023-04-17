@@ -3,6 +3,7 @@ import { InscriptionModel } from 'src/domain/models/inscription/inscription.mode
 import { GetInscriptionsNoRespondedUseCase } from 'src/bussiness/useCases/inscription/getInscriptionsNoResponded.usecase';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RespondInscriptionUseCase } from '../../../../../bussiness/useCases/inscription/respondInscription.usecase';
+import { DeleteInscriptionUseCase } from 'src/bussiness/useCases/inscription/deleteInscription.usecase';
 
 @Component({
   selector: 'sofka-list-inscriptions',
@@ -14,6 +15,7 @@ export class ListInscriptionsComponent implements OnInit {
   routeDashboard: string[];
 
   //variables
+  render!: boolean;
   inscriptionsList: InscriptionModel[];
   frmInscription: FormGroup;
   inscriptionID!: string;
@@ -22,7 +24,8 @@ export class ListInscriptionsComponent implements OnInit {
 
   constructor(
     private getInscriptionsNoRespondedUseCase: GetInscriptionsNoRespondedUseCase,
-    private respondInscriptionUseCase: RespondInscriptionUseCase
+    private respondInscriptionUseCase: RespondInscriptionUseCase,
+    private deteleInscriptionUseCase: DeleteInscriptionUseCase
   ) {
     this.frmInscription = new FormGroup({
       stateInscription: new FormControl('', [Validators.required]),
@@ -31,6 +34,9 @@ export class ListInscriptionsComponent implements OnInit {
     this.inscriptionsList = [];
     this.empty = false;
     this.role = localStorage.getItem('role') || '';
+    setTimeout(() => {
+      this.render = true;
+    }, 300);
   }
 
   //#region ngOnInit
@@ -60,10 +66,24 @@ export class ListInscriptionsComponent implements OnInit {
       .subscribe({
         next: (response) => this.ngOnInit(),
         error: (error) => console.log(error),
+        complete: () => {
+          subRespondIns.unsubscribe();
+        },
       });
-    setTimeout(() => {
-      subRespondIns.unsubscribe();
-    }, 500);
+  }
+  //#endregion
+
+  //#region
+  deleteInscription(inscriptionID: string): void {
+    let subDelete = this.deteleInscriptionUseCase
+      .execute(inscriptionID)
+      .subscribe({
+        next: (response) => this.ngOnInit(),
+        error: (error) => console.log(error),
+        complete: () => {
+          subDelete.unsubscribe();
+        },
+      });
   }
   //#endregion
 
@@ -77,10 +97,10 @@ export class ListInscriptionsComponent implements OnInit {
       error: (error) => {
         console.log(error), (this.empty = true);
       },
+      complete: () => {
+        subGetIns.unsubscribe();
+      },
     });
-    setTimeout(() => {
-      subGetIns.unsubscribe();
-    }, 500);
   }
   //#endregion
 

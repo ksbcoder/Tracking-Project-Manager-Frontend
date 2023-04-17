@@ -28,7 +28,7 @@ export class InscriptionImplementationRepository extends InscriptionRepository {
   deleteInscriptionAsync(idInscription: string): Observable<InscriptionModel> {
     return this.http.delete<InscriptionModel>(
       environment.urlApiProjects +
-        'Inscription/IDidInscription=' +
+        'Inscription/ID?idInscription=' +
         idInscription
     );
   }
