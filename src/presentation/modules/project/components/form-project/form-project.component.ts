@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CreateProjectUseCase } from 'src/bussiness/useCases/project/createProject.usecase';
 import { GetProjectByIdUseCase } from 'src/bussiness/useCases/project/getProjectById.usecase';
 import { UpdateProjectUseCase } from 'src/bussiness/useCases/project/updateProject.usecase';
@@ -27,7 +28,8 @@ export class FormProjectComponent implements OnInit {
     private createProject: CreateProjectUseCase,
     private updateProject: UpdateProjectUseCase,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.frmProject = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -61,7 +63,14 @@ export class FormProjectComponent implements OnInit {
               stateProject: data.stateProject,
             });
           },
-          error: (err) => console.log(err),
+          error: (err) => {
+            console.log(err),
+              this.toastr.error('Error loading project.', '', {
+                timeOut: 3500,
+                positionClass: 'toast-bottom-right',
+                closeButton: true,
+              });
+          },
           complete: () => {
             subParams.unsubscribe();
             subGet.unsubscribe();
@@ -87,9 +96,19 @@ export class FormProjectComponent implements OnInit {
           .execute(this.projectToCreate)
           .subscribe({
             next: (data) => {
+              this.toastr.success('Project created successfully.', '', {
+                timeOut: 3500,
+                positionClass: 'toast-bottom-right',
+              });
               this.router.navigate(['../list'], { relativeTo: this.route });
             },
-            error: (err) => console.log(err),
+            error: (err) => {
+              console.log(err);
+              this.toastr.error('Project was not created', '', {
+                timeOut: 3500,
+                positionClass: 'toast-bottom-right',
+              });
+            },
             complete: () => {
               subCreate.unsubscribe();
             },
@@ -113,11 +132,22 @@ export class FormProjectComponent implements OnInit {
               project: this.projectToUpdate,
             })
             .subscribe({
-              next: (data) =>
+              next: (data) => {
+                this.toastr.success('Project updated successfully.', '', {
+                  timeOut: 3500,
+                  positionClass: 'toast-bottom-right',
+                });
                 this.router.navigate(['../../list'], {
                   relativeTo: this.route,
-                }),
-              error: (err) => console.log(err),
+                });
+              },
+              error: (err) => {
+                console.log(err),
+                  this.toastr.error('Project was not updated', '', {
+                    timeOut: 3500,
+                    positionClass: 'toast-bottom-right',
+                  });
+              },
               complete: () => {
                 subParams.unsubscribe();
                 subUpdate.unsubscribe();

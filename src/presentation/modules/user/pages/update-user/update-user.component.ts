@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { UpdateUserUseCase } from 'src/bussiness/useCases/user/updateUser.usecase';
 
@@ -14,13 +15,15 @@ export class UpdateUserComponent implements OnInit {
   routeListUsers: string[];
   //variables
   frmUpdateUser: FormGroup;
+  render!: boolean;
 
   //#region constructor
   constructor(
     private getUserById: GetUserByIdUseCase,
     private updateUser: UpdateUserUseCase,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.routeListUsers = ['../../list'];
     this.frmUpdateUser = new FormGroup({
@@ -41,6 +44,9 @@ export class UpdateUserComponent implements OnInit {
       role: new FormControl('', [Validators.required]),
       stateUser: new FormControl('', [Validators.required]),
     });
+    setTimeout(() => {
+      this.render = true;
+    }, 400);
   }
   //#endregion
 
@@ -59,7 +65,14 @@ export class UpdateUserComponent implements OnInit {
             stateUser: data.stateUser,
           });
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          console.log(err),
+            this.toastr.error('Error loading user info.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
         complete: () => {
           subGet.unsubscribe();
           subParams.unsubscribe();
@@ -80,9 +93,22 @@ export class UpdateUserComponent implements OnInit {
           user: this.frmUpdateUser.getRawValue(),
         })
         .subscribe({
-          next: (data) =>
-            this.router.navigate(['../../list'], { relativeTo: this.route }),
-          error: (err) => console.log(err),
+          next: (data) => {
+            this.router.navigate(['../../list'], { relativeTo: this.route });
+            this.toastr.success('User updated successfully.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+          },
+          error: (err) => {
+            console.log(err),
+              this.toastr.error('Error updating user.', '', {
+                timeOut: 3500,
+                positionClass: 'toast-bottom-right',
+                closeButton: true,
+              });
+          },
           complete: () => {
             subUpdate.unsubscribe();
             subParams.unsubscribe();

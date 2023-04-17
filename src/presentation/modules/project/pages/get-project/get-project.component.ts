@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GetProjectByIdUseCase } from 'src/bussiness/useCases/project/getProjectById.usecase';
 import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { ProjectModel } from 'src/domain/models/project/project.model';
 import { UserModel } from 'src/domain/models/user/user.model';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sofka-get-project',
@@ -27,7 +28,8 @@ export class GetProjectComponent implements OnInit {
   constructor(
     private getProjectById: GetProjectByIdUseCase,
     private getLeaderById: GetUserByIdUseCase,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.routeList = ['../../list'];
     this.getProject();
@@ -36,7 +38,7 @@ export class GetProjectComponent implements OnInit {
     }, 100);
     setTimeout(() => {
       this.render = true;
-    }, 400);
+    }, 1200);
   }
 
   ngOnInit(): void {}
@@ -63,7 +65,14 @@ export class GetProjectComponent implements OnInit {
             (this.deadLine = this.dateToString(data.deadLine)),
             (this.completedAt = this.dateToString(data.completedAt));
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          console.log(err);
+          this.toastr.error('Error consulting the project', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        },
         complete: () => {
           subParams.unsubscribe(), subUpdate.unsubscribe();
         },

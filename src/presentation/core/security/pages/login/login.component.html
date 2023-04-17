@@ -40,7 +40,7 @@
             </form>
             <button type="button" form="frmLogin" class="btn btn-general btn-lg shadow mt-3"
               (click)="signIn(email.value, password.value)">
-              <i class="bi bi-box-arrow-in-right"> Sign In with email</i>
+              <i class="bi bi-box-arrow-in-right"> Sign In</i>
             </button>
           </div>
           <span class="or"><span class=" orInner">Or</span></span>
@@ -49,12 +49,13 @@
               <div class="col">
                 <button type="button" class="btn btn-general btn-lg shadow float-end"
                   (click)="signUp(email.value, password.value)">
-                  <i class="bi bi-arrow-bar-up"> Sign Up with email</i>
+
+                  <i class="bi bi-arrow-bar-up"> Sign Up</i>
                 </button>
               </div>
               <div class="col">
                 <button type="button" class="btn btn-general btn-lg shadow float-start" (click)="auth()">
-                  <i class="bi bi-google"> Sign In with Google</i>
+                  <i class="bi bi-google"> Sign In</i>
                 </button>
               </div>
             </div>

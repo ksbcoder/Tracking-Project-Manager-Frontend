@@ -1,4 +1,3 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GetProjectsByLeaderIdUseCase } from 'src/bussiness/useCases/project/getProjectsByLeaderId.usecase';
 import { OpenProjectCommand } from 'src/domain/commands/project/openProjectCommand';
 import { ProjectModel } from 'src/domain/models/project/project.model';
@@ -11,6 +10,8 @@ import { InscriptionModel } from 'src/domain/models/inscription/inscription.mode
 import { GetInscriptionByUserIdUseCase } from 'src/bussiness/useCases/inscription/getInscriptionByUserId.usecase';
 import { CreateInscriptionUseCase } from 'src/bussiness/useCases/inscription/createInscription.usecase';
 import { NewInscriptionCommand } from 'src/domain/commands/inscription/newInscriptionCommand';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sofka-list-projects',
@@ -48,7 +49,8 @@ export class ListProjectsComponent implements OnInit {
     private completeProjectUseCase: CompleteProjectUseCase,
     private deleteProjectUseCase: DeleteProjectUseCase,
     private getInscriptionByUserUseCase: GetInscriptionByUserIdUseCase,
-    private createInscription: CreateInscriptionUseCase
+    private createInscription: CreateInscriptionUseCase,
+    private toastr: ToastrService
   ) {
     this.frmUpdate = new FormGroup({
       deadline: new FormControl('', [Validators.required]),
@@ -96,8 +98,30 @@ export class ListProjectsComponent implements OnInit {
     let subOpen = this.openProjectUseCase
       .execute({ idProject: this.projectID, project: this.openProjectCommand })
       .subscribe({
-        next: (data) => this.ngOnInit(),
-        error: (err) => console.log(err),
+        next: (data) => {
+          this.ngOnInit();
+          this.toastr.success('Project opened successfully.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        },
+        error: (err) => {
+          this.toastr.error('Project was not opened.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+          this.toastr.info(
+            'You may only have one project open at a time.',
+            '',
+            {
+              timeOut: 4500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            }
+          );
+        },
         complete: () => {
           subOpen.unsubscribe();
         },
@@ -108,8 +132,27 @@ export class ListProjectsComponent implements OnInit {
   //#region complete project with modal
   completeProject(projectID: string): void {
     let subComplete = this.completeProjectUseCase.execute(projectID).subscribe({
-      next: (data) => this.ngOnInit(),
-      error: (err) => console.log(err),
+      next: (data) => {
+        this.ngOnInit();
+        this.toastr.success('Project successfully completed.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastr.error('Project was not completed.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
+        this.toastr.warning('All tasks must be completed.', '', {
+          timeOut: 4500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
+      },
       complete: () => {
         subComplete.unsubscribe();
       },
@@ -120,8 +163,22 @@ export class ListProjectsComponent implements OnInit {
   //#region delete with modal
   deleteProject(projectID: string): void {
     let subDelete = this.deleteProjectUseCase.execute(projectID).subscribe({
-      next: (data) => this.ngOnInit(),
-      error: (err) => console.log(err),
+      next: (data) => {
+        this.ngOnInit();
+        this.toastr.success('Project successfully deleted.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastr.error('Project was not deleted.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
+      },
       complete: () => {
         subDelete.unsubscribe();
       },
@@ -138,9 +195,31 @@ export class ListProjectsComponent implements OnInit {
     let subInscription = this.createInscription
       .execute(this.inscriptionToCreate)
       .subscribe({
-        next: (data) => this.ngOnInit(),
-        //toast para que ya esta registrada
-        error: (err) => console.log(err),
+        next: (data) => {
+          this.ngOnInit();
+          this.toastr.success('You have been registered successfully.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error('You have not been registered.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+          this.toastr.info(
+            'You may already be registered for this project.',
+            '',
+            {
+              timeOut: 4500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            }
+          );
+        },
         complete: () => {
           subInscription.unsubscribe();
         },
@@ -159,6 +238,11 @@ export class ListProjectsComponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.empty = true;
+        this.toastr.info('You have no projects.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subGet.unsubscribe();
@@ -175,6 +259,11 @@ export class ListProjectsComponent implements OnInit {
       error: (err) => {
         console.log(err);
         this.empty = true;
+        this.toastr.info('There are no projects.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subGet.unsubscribe();
@@ -186,11 +275,19 @@ export class ListProjectsComponent implements OnInit {
     let idUser = localStorage.getItem('uidUser') as string;
     let subGet = this.getInscriptionByUserUseCase.execute(idUser).subscribe({
       next: (data) => {
-        console.log(data);
         this.inscription = data;
+        this.toastr.warning('Projects loadedasasasd', '', {
+          timeOut: 2000,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       error: (err) => {
-        console.log(err);
+        this.toastr.warning('There is no inscription yours', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subGet.unsubscribe();

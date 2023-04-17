@@ -1,4 +1,3 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewTaskCommand } from 'src/domain/commands/task/newTaskCommand';
 import { UpdateTaskCommand } from 'src/domain/commands/task/updateTaskCommand';
@@ -10,6 +9,9 @@ import { UpdateTaskUseCase } from 'src/bussiness/useCases/task/updateTask.userca
 import { ProjectModel } from 'src/domain/models/project/project.model';
 import { UserModel } from 'src/domain/models/user/user.model';
 import { GetUsersUseCase } from '../../../../../bussiness/useCases/user/getUsers.usecase';
+import { Component, OnInit, Input } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Phase, StateProject, StateTask } from 'src/base/utils/enums';
 
 @Component({
   selector: 'sofka-form-task',
@@ -44,7 +46,8 @@ export class FormTaskComponent implements OnInit {
     private createTask: CreateTaskUseCase,
     private updateTask: UpdateTaskUseCase,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.projects = [];
     this.selectedProject = '';
@@ -97,7 +100,17 @@ export class FormTaskComponent implements OnInit {
             this.projectSaved = data.projectID;
             this.assignedToID = data.assignedTo;
           },
-          error: (err) => console.log(err),
+          error: (err) => {
+            console.log(err),
+              this.toastr.error(
+                'Error loading task data, please try again.',
+                '',
+                {
+                  timeOut: 3500,
+                  positionClass: 'toast-top-center',
+                }
+              );
+          },
           complete: () => {
             subGet.unsubscribe();
             subParams.unsubscribe();
@@ -121,10 +134,26 @@ export class FormTaskComponent implements OnInit {
       };
       let subCreate = this.createTask.execute(this.taskToCreate).subscribe({
         next: (data) => {
-          console.log(data);
+          this.toastr.success('Task created successfully.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
           this.router.navigate(['../list'], { relativeTo: this.route });
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          console.log(err),
+            this.toastr.error('Task was no created.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+          this.toastr.warning('Project Open? Check the project deadline.', '', {
+            timeOut: 4500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        },
         complete: () => {
           subCreate.unsubscribe();
         },
@@ -143,9 +172,30 @@ export class FormTaskComponent implements OnInit {
           .execute({ idTask: params['id'], task: this.taskToUpdate })
           .subscribe({
             next: (data) => {
+              this.toastr.success('Task updated successfully.', '', {
+                timeOut: 3500,
+                positionClass: 'toast-bottom-right',
+                closeButton: true,
+              });
               this.router.navigate(['../../list'], { relativeTo: this.route });
             },
-            error: (err) => console.log(err),
+            error: (err) => {
+              console.log(err),
+                this.toastr.error('Task was no updated.', '', {
+                  timeOut: 3500,
+                  positionClass: 'toast-bottom-right',
+                  closeButton: true,
+                });
+              this.toastr.warning(
+                'Project Open? Check the project deadline.',
+                '',
+                {
+                  timeOut: 4500,
+                  positionClass: 'toast-bottom-right',
+                  closeButton: true,
+                }
+              );
+            },
             complete: () => {
               subTask.unsubscribe();
               subParams.unsubscribe();
@@ -162,17 +212,31 @@ export class FormTaskComponent implements OnInit {
       .execute(this.leaderID)
       .subscribe({
         next: (data) => {
-          (this.projects = data),
-            this.projects.forEach((project) => {
-              let pos = this.projects.indexOf(project);
-              if (project.phase == null) {
-                this.projects.splice(pos, 1);
-              }
-            });
+          this.projects = data;
         },
         error: (err) => console.log(err),
         complete: () => {
           subGetProjects.unsubscribe();
+          this.projects.forEach((project) => {
+            let pos = this.projects.indexOf(project);
+            console.log(project);
+            if (
+              project.phase == null ||
+              project.stateProject != StateProject.Active
+            ) {
+              this.projects.length >= 1
+                ? this.projects.splice(pos, 1)
+                : (this.projects = []);
+            }
+          });
+
+          if (this.projects.length == 0) {
+            this.toastr.info('No projects available.', '', {
+              timeOut: 2500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+          }
         },
       });
   }
@@ -187,6 +251,13 @@ export class FormTaskComponent implements OnInit {
             this.users.splice(pos, 1);
           }
         });
+        if (this.users.length == 0) {
+          this.toastr.info('No contributors available.', '', {
+            timeOut: 2500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        }
       },
       error: (err) => console.log(err),
       complete: () => {

@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { ProjectModel } from 'src/domain/models/project/project.model';
 import { TaskModel } from 'src/domain/models/task/task.model';
 import { UserModel } from 'src/domain/models/user/user.model';
@@ -6,6 +5,8 @@ import { GetTaskByIdUseCase } from '../../../../../bussiness/useCases/task/getTa
 import { GetProjectByIdUseCase } from '../../../../../bussiness/useCases/project/getProjectById.usecase';
 import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sofka-get-task',
@@ -31,7 +32,8 @@ export class GetTaskComponent implements OnInit {
     private getTaskByIdUseCase: GetTaskByIdUseCase,
     private getProjectByIdUseCase: GetProjectByIdUseCase,
     private getUserByIdUseCase: GetUserByIdUseCase,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.routeList = ['../../list'];
     this.createdAt = '';
@@ -63,7 +65,14 @@ export class GetTaskComponent implements OnInit {
             (this.deadLine = this.dateToString(data.deadLine)),
             (this.completedAt = this.dateToString(data.completedAt));
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          console.log(err),
+            this.toastr.error('Error loading task', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
         complete: () => {
           subGet.unsubscribe();
           subParams.unsubscribe();

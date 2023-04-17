@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { InscriptionModel } from 'src/domain/models/inscription/inscription.model';
 import { GetInscriptionsNoRespondedUseCase } from 'src/bussiness/useCases/inscription/getInscriptionsNoResponded.usecase';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RespondInscriptionUseCase } from '../../../../../bussiness/useCases/inscription/respondInscription.usecase';
 import { DeleteInscriptionUseCase } from 'src/bussiness/useCases/inscription/deleteInscription.usecase';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sofka-list-inscriptions',
@@ -25,7 +26,8 @@ export class ListInscriptionsComponent implements OnInit {
   constructor(
     private getInscriptionsNoRespondedUseCase: GetInscriptionsNoRespondedUseCase,
     private respondInscriptionUseCase: RespondInscriptionUseCase,
-    private deteleInscriptionUseCase: DeleteInscriptionUseCase
+    private deteleInscriptionUseCase: DeleteInscriptionUseCase,
+    private toastr: ToastrService
   ) {
     this.frmInscription = new FormGroup({
       stateInscription: new FormControl('', [Validators.required]),
@@ -64,8 +66,22 @@ export class ListInscriptionsComponent implements OnInit {
         value: this.frmInscription.getRawValue().stateInscription,
       })
       .subscribe({
-        next: (response) => this.ngOnInit(),
-        error: (error) => console.log(error),
+        next: (response) => {
+          this.ngOnInit(),
+            this.toastr.success('Inscription successfully responded.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
+        error: (error) => {
+          console.log(error),
+            this.toastr.error('Error responding inscription.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
         complete: () => {
           subRespondIns.unsubscribe();
         },
@@ -78,8 +94,22 @@ export class ListInscriptionsComponent implements OnInit {
     let subDelete = this.deteleInscriptionUseCase
       .execute(inscriptionID)
       .subscribe({
-        next: (response) => this.ngOnInit(),
-        error: (error) => console.log(error),
+        next: (response) => {
+          this.ngOnInit(),
+            this.toastr.success('Inscription successfully deleted.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
+        error: (error) => {
+          console.log(error),
+            this.toastr.error('Error deleting inscription.', '', {
+              timeOut: 3500,
+              positionClass: 'toast-bottom-right',
+              closeButton: true,
+            });
+        },
         complete: () => {
           subDelete.unsubscribe();
         },
@@ -96,6 +126,11 @@ export class ListInscriptionsComponent implements OnInit {
       },
       error: (error) => {
         console.log(error), (this.empty = true);
+        this.toastr.info('There may not be any inscriptions to respond.', '', {
+          timeOut: 2500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subGetIns.unsubscribe();

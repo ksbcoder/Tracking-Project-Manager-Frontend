@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskModel } from 'src/domain/models/task/task.model';
 import { GetTasksByUserIdUseCase } from '../../../../../bussiness/useCases/task/getTasksByUserId.usercase';
@@ -8,6 +7,8 @@ import { GetUsersUseCase } from '../../../../../bussiness/useCases/user/getUsers
 import { GetAllTasksUseCase } from '../../../../../bussiness/useCases/task/getAllTasks.usercase';
 import { CompleteTaskUseCase } from '../../../../../bussiness/useCases/task/completeTask.usercase';
 import { DeleteTaskUseCase } from '../../../../../bussiness/useCases/task/deleteTask.usercase';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sofka-list-tasks',
@@ -43,7 +44,8 @@ export class ListTasksComponent implements OnInit {
     private getUsersUseCase: GetUsersUseCase,
     private assignTaskUseCase: AssignTaskUseCase,
     private completeTaskUseCase: CompleteTaskUseCase,
-    private deleteTaskUseCase: DeleteTaskUseCase
+    private deleteTaskUseCase: DeleteTaskUseCase,
+    private toastr: ToastrService
   ) {
     this.routeDashboard = ['../../'];
     this.routeCreate = ['../create'];
@@ -91,9 +93,26 @@ export class ListTasksComponent implements OnInit {
         uidUser: this.frmTask.getRawValue().assignedTo,
       })
       .subscribe({
-        next: (response) => this.ngOnInit(),
+        next: (response) => {
+          this.toastr.success('Task was assigned.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+          this.ngOnInit();
+        },
         error: (error) => {
           console.log(error);
+          this.toastr.error('Task was not assigned.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+          this.toastr.info('The contributor may not be registered.', '', {
+            timeOut: 4500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
         },
         complete: () => {
           subAssignTask.unsubscribe();
@@ -105,9 +124,21 @@ export class ListTasksComponent implements OnInit {
   //#region complete task
   completeTask(taskID: number): void {
     let subCompleteTask = this.completeTaskUseCase.execute(taskID).subscribe({
-      next: (response) => this.ngOnInit(),
+      next: (response) => {
+        this.ngOnInit(),
+          this.toastr.success('Task was completed.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+      },
       error: (error) => {
         console.log(error);
+        this.toastr.error('Task was not completed.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subCompleteTask.unsubscribe();
@@ -119,9 +150,21 @@ export class ListTasksComponent implements OnInit {
   //#region delete task
   deleteTask(taskID: number): void {
     let subDeleteTask = this.deleteTaskUseCase.execute(taskID).subscribe({
-      next: (response) => this.ngOnInit(),
+      next: (response) => {
+        this.ngOnInit(),
+          this.toastr.success('Task was deleted.', '', {
+            timeOut: 3500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+      },
       error: (error) => {
         console.log(error);
+        this.toastr.error('Task was not deleted.', '', {
+          timeOut: 3500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subDeleteTask.unsubscribe();
@@ -140,6 +183,11 @@ export class ListTasksComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.empty = true;
+        this.toastr.info('There may not be any tasks yet.', '', {
+          timeOut: 2500,
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       complete: () => {
         subGetAllTasks.unsubscribe();
@@ -158,6 +206,11 @@ export class ListTasksComponent implements OnInit {
         error: (error) => {
           console.log(error);
           this.empty = true;
+          this.toastr.info('There may not be any tasks yet.', '', {
+            timeOut: 2500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
         },
         complete: () => {
           subGetTaskByUser.unsubscribe();
@@ -177,6 +230,13 @@ export class ListTasksComponent implements OnInit {
             this.users.splice(pos, 1);
           }
         });
+        if (this.users.length == 0) {
+          this.toastr.info('There are no contributors registered.', '', {
+            timeOut: 4500,
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+          });
+        }
       },
     });
   }
