@@ -13,6 +13,8 @@ export abstract class UserRepository {
 
   abstract getUsersAsync(): Observable<UserModel[]>;
 
+  abstract getActiveUsersAsync(): Observable<UserModel[]>;
+
   abstract updateUserAsync(params: {
     uidUser: string;
     user: UserModel;

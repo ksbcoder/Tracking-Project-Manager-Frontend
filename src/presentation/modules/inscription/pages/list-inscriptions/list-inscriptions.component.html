@@ -55,14 +55,14 @@
   <div class="modal fade" id="modal-inscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="update"> Please choose a response
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body bg-dark text-light">
           <form id="frmInscription" (ngSubmit)="respondInscription()" [formGroup]="frmInscription">
-            <select class="form-control bg-dark text-light" name="stateInscription" id="stateInscription"
+            <select class="form-control bg-dark text-light border-0" name="stateInscription" id="stateInscription"
               formControlName="stateInscription">
               <option value="" selected>Choose one...</option>
               <option value="1">Approved</option>
@@ -74,7 +74,7 @@
             </p>
           </form>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <button type="submit" form="frmInscription" [disabled]="frmInscription.invalid"
             class="btn btn-outline-info text-light" data-bs-dismiss="modal">Respond</button>
@@ -88,12 +88,11 @@
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="delete"> Are you sure to delete this inscription?
           </h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-danger text-light" (click)="deleteInscription(inscriptionID)"
             data-bs-dismiss="modal">Delete</a>

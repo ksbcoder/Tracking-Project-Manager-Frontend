@@ -90,7 +90,7 @@
   <div class="modal fade" id="modal-open" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="update"> Are you sure to open <strong>{{name}}</strong> project?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -99,7 +99,7 @@
           <form id="frmUpdate" (ngSubmit)="openProject()" [formGroup]="frmUpdate">
             <div class="mb-3">
               <label for="deadline" class="form-label">Please choose deadline</label>
-              <input class="form-control bg-dark text-light" type="date" name="deadline" id="deadline"
+              <input class="form-control bg-dark text-light border-0" type="date" name="deadline" id="deadline"
                 formControlName="deadline">
             </div>
             <p class="text-warning ms-4"
@@ -108,7 +108,7 @@
             </p>
           </form>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <button type="submit" form="frmUpdate" [disabled]="frmUpdate.invalid" class="btn btn-outline-teal text-light"
             data-bs-dismiss="modal">Open</button>
@@ -121,12 +121,12 @@
   <div class="modal fade" id="modal-complete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="complete"> Are you sure to complete <strong>{{name}}</strong> project?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-pink text-light" (click)="completeProject(projectID)"
             data-bs-dismiss="modal">Complete</a>
@@ -139,12 +139,12 @@
   <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="delete"> Are you sure to delete <strong>{{name}}</strong> project?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-danger text-light" (click)="deleteProject(projectID)"
             data-bs-dismiss="modal">Delete</a>
@@ -157,13 +157,13 @@
   <div class="modal fade" id="modal-inscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="inscription"> Are you sure you want to sign up for <strong>{{name}}</strong>
             project?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-teal text-light" (click)="joinToProject(projectID)"
             data-bs-dismiss="modal">Join</a>

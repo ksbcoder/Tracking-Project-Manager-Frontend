@@ -9,14 +9,18 @@
     <div class="row m-3">
       <div class="col col-lg-1"></div>
       <div class="col col-10">
-        <h3>Editar</h3>
+        <div class="row">
+          <div class="col">
+            <h3>Update user</h3>
+          </div>
+        </div>
         <div class="text-center">
           <form id="frmUpdateUser" (ngSubmit)="sendData()" [formGroup]="frmUpdateUser"
             class="form-control bg-container-or-form mt-3 p-3 border-0 text-start text-light shadow-lg">
             <div class="mb-3 row">
               <label for="Username" class="col-sm-2 col-form-label">Username</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control bg-dark text-light" id="Username" placeholder="username"
+                <input type="text" class="form-control bg-dark text-light border-0" id="Username" placeholder="username"
                   formControlName="userName" name="userName">
                 <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
                   *ngIf="frmUpdateUser.get('userName')?.hasError('required') && frmUpdateUser.get('userName')?.touched">
@@ -31,7 +35,7 @@
             <div class="mb-3 row">
               <label for="Email" class="col-sm-2 col-form-label">Email</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control bg-dark text-light" id="Email" placeholder="email"
+                <input type="text" class="form-control bg-dark text-light border-0" id="Email" placeholder="email"
                   formControlName="email" name="email">
                 <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
                   *ngIf="frmUpdateUser.get('email')?.hasError('required') && frmUpdateUser.get('email')?.touched">
@@ -46,8 +50,8 @@
             <div class="mb-3 row">
               <label for="EfficiencyRate" class="col-sm-2 col-form-label">Efficiency rate</label>
               <div class="col-sm-10">
-                <input type="number" class="form-control bg-dark text-light" id="EfficiencyRate" placeholder="50"
-                  min="0" max="100" formControlName="efficiencyRate" name="efficiencyRate">
+                <input type="number" class="form-control bg-dark text-light border-0" id="EfficiencyRate"
+                  placeholder="50" min="0" max="100" formControlName="efficiencyRate" name="efficiencyRate">
                 <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
                   *ngIf="frmUpdateUser.get('efficiencyRate')?.hasError('required') && frmUpdateUser.get('efficiencyRate')?.touched">
                   You must indicate the efficiency rate.
@@ -65,8 +69,8 @@
             <div class="mb-3 row">
               <label for="TasksCompleted" class="col-sm-2 col-form-label">Tasks completed</label>
               <div class="col-sm-10">
-                <input type="number" class="form-control bg-dark text-light" id="TasksCompleted" placeholder="50"
-                  min="0" formControlName="tasksCompleted" name="tasksCompleted">
+                <input type="number" class="form-control bg-dark text-light border-0" id="TasksCompleted"
+                  placeholder="50" min="0" formControlName="tasksCompleted" name="tasksCompleted">
                 <div class="alert alert-warning p-1 m-1 mt-1 ms-2 w-50" role="alert"
                   *ngIf="frmUpdateUser.get('tasksCompleted')?.hasError('required') && frmUpdateUser.get('tasksCompleted')?.touched">
                   You must indicate the tasks completed.
@@ -79,7 +83,7 @@
             </div>
             <div class="mb-3 row">
               <label for="Role" class="col-sm-2 col-form-label">Role</label>
-              <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
+              <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light border-0"
                 aria-label="Default select example" id="Role" formControlName="role" name="role">
                 <option value="" selected>Choose one...</option>
                 <option value="0">Default</option>
@@ -93,7 +97,7 @@
             </div>
             <div class="mb-3 row">
               <label for="StateUser" class="col-sm-2 col-form-label">State user</label>
-              <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
+              <select class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light border-0"
                 aria-label="Default select example" id="StateUser" formControlName="stateUser" name="stateUser">
                 <option value="" selected>Choose one...</option>
                 <option value="0">Active</option>

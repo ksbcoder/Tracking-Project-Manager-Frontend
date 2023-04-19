@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import * as auth from 'firebase/auth';
-// import { StateService } from '../../../../shared/services/state.service';
 import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { CreateUserUseCase } from 'src/bussiness/useCases/user/createUser.usecase';
 import { NewUserCommand } from 'src/domain/commands/user/newUserCommand';
@@ -19,9 +18,8 @@ export class AuthService {
     private router: Router,
     private getUserUseCase: GetUserByIdUseCase,
     private createUserUseCase: CreateUserUseCase,
-    private afAuth: AngularFireAuth // private state$: StateService
+    private afAuth: AngularFireAuth
   ) {
-    // this.clearLocalStorage();
   }
 
   // Sign in with email/password
@@ -83,98 +81,105 @@ export class AuthService {
   // Sign up with email/password
   async SignUp(email: string, password: string) {
     try {
+
       const result = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
 
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
-      localStorage.setItem(
-        'userName',
-        result.user?.displayName ? result.user?.displayName : 'User'
-      );
-      localStorage.setItem(
-        'email',
-        result.user?.email ? result.user.email : 'user@mail.com'
-      );
-      localStorage.setItem('uidUser', result.user?.uid as string);
-
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // consumo de api
-      let userData!: UserModel;
-      let subGet = this.getUserUseCase
-        .execute(localStorage.getItem('uidUser') as string)
-        .subscribe({
-          next: (data) => {
-            userData = data;
-          },
-          error: (err) => {
-            console.log(err);
-          },
-          complete: () => {
-            subGet.unsubscribe();
-          },
-        });
-
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      if (userData != undefined) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      setTimeout(() => {
         localStorage.setItem(
           'userName',
-          userData.userName ? userData.userName : 'User'
+          result.user?.displayName ? result.user?.displayName : 'User'
         );
         localStorage.setItem(
-          'efficiencyRate',
-          userData.efficiencyRate.toString()
+          'email',
+          result.user?.email ? result.user.email : 'user@mail.com'
         );
-        localStorage.setItem(
-          'tasksCompleted',
-          userData.tasksCompleted.toString()
-        );
-        localStorage.setItem('role', userData.role.toString());
-        localStorage.setItem('stateUser', userData.stateUser.toString());
-        await new Promise((resolve) => setTimeout(resolve, 2500));
-        this.router.navigate(['dashboard']);
-      } else {
-        localStorage.setItem('role', '0');
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        let subCreate = await this.createUserUseCase
-          .execute(
-            new NewUserCommand(
-              localStorage.getItem('uidUser') as string,
-              localStorage.getItem('userName') as string,
-              localStorage.getItem('email') as string
-            )
-          )
+        localStorage.setItem('uidUser', result.user?.uid as string);
+      }, 100);
+
+      let userData!: UserModel;
+      setTimeout(() => {
+        // consumo de api
+        let subGet = this.getUserUseCase
+          .execute(localStorage.getItem('uidUser') as string)
           .subscribe({
             next: (data) => {
-              localStorage.setItem(
-                'userName',
-                userData.userName ? userData.userName : 'User'
-              );
-              localStorage.setItem(
-                'efficiencyRate',
-                data.efficiencyRate.toString()
-              );
-              localStorage.setItem(
-                'tasksCompleted',
-                data.tasksCompleted.toString()
-              );
-              localStorage.setItem('stateUser', data.stateUser.toString());
+              userData = data;
             },
             error: (err) => {
               console.log(err);
             },
             complete: () => {
-              subCreate.unsubscribe();
+              subGet.unsubscribe();
             },
           });
-        await new Promise((resolve) => setTimeout(resolve, 2500));
-        this.router.navigate(['dashboard']);
-      }
-    } catch (error) {
+      }, 100);
+
+      setTimeout(() => {
+        if (userData != undefined) {
+          localStorage.setItem('role', userData.role.toString());
+          localStorage.setItem(
+            'userName',
+            userData.userName ? userData.userName : 'User'
+          );
+          localStorage.setItem(
+            'efficiencyRate',
+            userData.efficiencyRate.toString()
+          );
+          localStorage.setItem(
+            'tasksCompleted',
+            userData.tasksCompleted.toString()
+          );
+          localStorage.setItem('stateUser', userData.stateUser.toString());
+          setTimeout(() => {
+            this.router.navigate(['dashboard']);
+          }, 4500);
+        } else {
+          localStorage.setItem('role', '0');
+          setTimeout(() => {
+            let subCreate = this.createUserUseCase
+              .execute(
+                new NewUserCommand(
+                  localStorage.getItem('uidUser') as string,
+                  localStorage.getItem('userName') as string,
+                  localStorage.getItem('email') as string
+                )
+              )
+              .subscribe({
+                next: (data) => {
+                  setTimeout(() => { }, 500);
+                  localStorage.setItem(
+                    'userName',
+                    userData.userName ? userData.userName : 'User'
+                  );
+                  localStorage.setItem(
+                    'efficiencyRate',
+                    data.efficiencyRate.toString()
+                  );
+                  localStorage.setItem(
+                    'tasksCompleted',
+                    data.tasksCompleted.toString()
+                  );
+                  localStorage.setItem('stateUser', data.stateUser.toString());
+                },
+                error: (err) => {
+                  console.log(err);
+                },
+                complete: () => {
+                  subCreate.unsubscribe();
+                  setTimeout(() => {
+                    this.router.navigate(['dashboard']);
+                  }, 4500);
+                },
+              });
+          }, 1000);
+        }
+      }, 1000);
+    }
+    catch (error) {
       window.alert(error);
     }
   }
@@ -246,7 +251,7 @@ export class AuthService {
               )
               .subscribe({
                 next: (data) => {
-                  setTimeout(() => {}, 500);
+                  setTimeout(() => { }, 500);
                   localStorage.setItem(
                     'efficiencyRate',
                     data.efficiencyRate.toString()

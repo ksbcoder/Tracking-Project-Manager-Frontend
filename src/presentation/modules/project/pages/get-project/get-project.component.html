@@ -11,7 +11,11 @@
     <div class="row m-3">
       <div class="col col-lg-1"></div>
       <div class="col col-10">
-        <h3>Project: {{ project.name }}</h3>
+        <div class="row">
+          <div class="col">
+            <h3 class="float-start">Project: {{ project.name }}</h3>
+          </div>
+        </div>
         <div class="text-center">
           <form id="frmViewProject"
             class="form-control bg-container-or-form mt-3 p-4 border-0 text-start text-light shadow-lg">
@@ -20,36 +24,36 @@
                 <div class="mb-3 row">
                   <label for="Name" class="col-sm-3 col-form-label">Name</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Name" name="name"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Name" name="name"
                       [value]="project.name" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="Description" class="col-sm-3 col-form-label">Description</label>
                   <div class="col">
-                    <textarea type="text" class="form-control bg-dark text-light" id="Description" name="description"
-                      [value]="project.description" readonly>
+                    <textarea type="text" class="form-control bg-dark text-light border-0" id="Description"
+                      name="description" [value]="project.description" readonly>
                               </textarea>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="Leader" class="col-sm-3 col-form-label">Leader</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Leader" name="description"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Leader" name="description"
                       [value]="leader.userName" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="CreatedAt" class="col-sm-3 col-form-label">Created At</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="CreatedAt" name="createdAt"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="CreatedAt" name="createdAt"
                       [value]="createdAt" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="OpenDate" class="col-sm-3 col-form-label">Open date</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="OpenDate" name="openDate"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="OpenDate" name="openDate"
                       [value]="openDate" readonly>
                   </div>
                 </div>
@@ -58,41 +62,101 @@
                 <div class="mb-3 row">
                   <label for="Deadline" class="col-sm-3 col-form-label">Deadline</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Deadline" name="deadLine"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Deadline" name="deadLine"
                       [value]="deadLine" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="CompletedAt" class="col-sm-3 col-form-label">Completed At</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="CompletedAt" name="completedAt"
-                      [value]="completedAt" readonly>
+                    <input type="text" class="form-control bg-dark text-light border-0" id="CompletedAt"
+                      name="completedAt" [value]="completedAt" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="EfficiencyRate" class="col-sm-3 col-form-label">Efficiency rate</label>
                   <div class="col">
-                    <input type="number" class="form-control bg-dark text-light" id="EfficiencyRate"
+                    <input type="number" class="form-control bg-dark text-light border-0" id="EfficiencyRate"
                       name="efficiencyRate" [value]="project.efficiencyRate" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="Phase" class="col-sm-3 col-form-label">Phase</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Phase" name="phase"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Phase" name="phase"
                       [value]="project.phase | enumsNumberToStringPipe: 'phase'" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="StateProject" class="col-sm-3 col-form-label">State</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="StateProject" name="stateProject"
-                      [value]="project.stateProject | enumsNumberToStringPipe: 'stateProject'" readonly>
+                    <input type="text" class="form-control bg-dark text-light border-0" id="StateProject"
+                      name="stateProject" [value]="project.stateProject | enumsNumberToStringPipe: 'stateProject'"
+                      readonly>
                   </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-md btn-general shadow-lg float-end rounded-5 me-2" data-bs-toggle="modal"
+                    data-bs-target="#modal-comments"><i class="bi bi-chat-text mt-1"></i></button>
                 </div>
               </div>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Comments -->
+<div class="modal fade" id="modal-comments" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light border-0">
+        <h1 class="modal-title fs-5" id="comments"> Comments
+        </h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-light">
+        <div *ngIf="commentsEmpty">
+          <p class="text-center">There are no comments.</p>
+        </div>
+        <div *ngIf="!commentsEmpty">
+          <div *ngFor="let comment of comments">
+            <div class="card bg-card-dashboard">
+              <div class="card-body row">
+                <div class="col col-10">
+                  <p class="card-title"><i class="bi bi-clock-history"> {{comment.createdAt | dateToRelativeTime }}</i>
+                  </p>
+                  <p class="card-text">{{comment.description}}</p>
+                </div>
+                <div class="col col-2">
+                  <button class="btn btn-sm btn-outline-danger float-end text-light shadow-sm rounded-5 mt-2"
+                    (click)="deleteComment(comment.commentID)" [hidden]="comment.uidUser !== uidUser"
+                    data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-dark text-light border-0">
+        <div class="col col-10">
+          <form id="frmComment" (ngSubmit)="sendComment(project.projectID)" [formGroup]="frmComment">
+            <input class="form-control bg-dark text-light" type="text" name="description" id="description"
+              formControlName="description" placeholder="Type here" />
+            <p class="text-warning ms-4"
+              *ngIf="frmComment.get('description')?.hasError('required')&& frmComment.get('description')?.touched">
+              Description is empty.
+            </p>
+          </form>
+        </div>
+        <div class="col align-self-center">
+          <button type="submit" form="frmComment" class="btn btn-outline-teal text-light me-1"
+            [disabled]="frmComment.invalid" data-bs-dismiss="modal"> <i class="bi bi-send-plus"></i></button>
+          <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
         </div>
       </div>
     </div>

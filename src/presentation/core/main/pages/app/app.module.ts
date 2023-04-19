@@ -14,6 +14,7 @@ import { UserModule } from 'src/data/repositories/user/user.module';
 import { ProjectModule } from 'src/data/repositories/project/project.module';
 import { InscriptionModule } from 'src/data/repositories/inscription/inscription.module';
 import { TaskModule } from 'src/data/repositories/task/task.module';
+import { CommentModule } from 'src/data/repositories/comment/comment.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from 'src/presentation/core/security/pages/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -26,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     ProjectModule,
     InscriptionModule,
     TaskModule,
+    CommentModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -39,4 +41,4 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

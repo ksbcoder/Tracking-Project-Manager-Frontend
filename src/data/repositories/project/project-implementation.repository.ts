@@ -40,6 +40,13 @@ export class ProjectImplementationRepository extends ProjectRepository {
       environment.urlApiProjects + 'Project/LeaderID?leaderId=' + idLeader
     );
   }
+
+  getProjectsActiveByLeaderIdAsync(idLeader: string): Observable<ProjectModel[]> {
+    return this.http.get<ProjectModel[]>(
+      environment.urlApiProjects + 'Project/Active/LeaderID?leaderId=' + idLeader
+    );
+  }
+
   getActiveProjectsAsync(): Observable<ProjectModel[]> {
     return this.http.get<ProjectModel[]>(
       environment.urlApiProjects + 'Project/ActiveOnly'
@@ -65,16 +72,16 @@ export class ProjectImplementationRepository extends ProjectRepository {
   }): Observable<UpdateProjectDTO> {
     return this.http.put<UpdateProjectDTO>(
       environment.urlApiProjects +
-        'Project/OpenProject/ID?idProject=' +
-        params.idProject,
+      'Project/OpenProject/ID?idProject=' +
+      params.idProject,
       params.project
     );
   }
   completeProjectAsync(idProject: string): Observable<UpdateProjectDTO> {
     return this.http.put<UpdateProjectDTO>(
       environment.urlApiProjects +
-        'Project/CompleteProject/ID?idProject=' +
-        idProject,
+      'Project/CompleteProject/ID?idProject=' +
+      idProject,
       null
     );
   }

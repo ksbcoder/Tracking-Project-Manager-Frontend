@@ -5,8 +5,6 @@ import { environment } from 'src/environments/environment';
 import { NewUserDTO } from 'src/domain/DTO/user/newUserDTO';
 import { UserModel } from 'src/domain/models/user/user.model';
 import { UpdateUserDTO } from 'src/domain/DTO/user/updateUserDTO';
-// import { NewUserToUserRepositoryMapper } from './mappers/user-repository.mapper';
-// import { UpdateUserToUserRepositoryMapper } from './mappers/user-repository.mapper';
 import { UserRepository } from 'src/bussiness/repositories/user/user.repository';
 import { NewUserCommand } from 'src/domain/commands/user/newUserCommand';
 
@@ -14,9 +12,6 @@ import { NewUserCommand } from 'src/domain/commands/user/newUserCommand';
   providedIn: 'root',
 })
 export class UserImplementationRepository extends UserRepository {
-  // newUserMapper = new NewUserToUserRepositoryMapper();
-  // updateUserMapper = new UpdateUserToUserRepositoryMapper()
-
   constructor(private http: HttpClient) {
     super();
   }
@@ -39,6 +34,10 @@ export class UserImplementationRepository extends UserRepository {
 
   getUsersAsync(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(environment.urlApiUsers);
+  }
+
+  getActiveUsersAsync(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(environment.urlApiUsers + 'Active');
   }
 
   updateUserAsync(params: {

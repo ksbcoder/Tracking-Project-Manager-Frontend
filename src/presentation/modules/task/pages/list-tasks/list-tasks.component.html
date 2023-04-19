@@ -82,7 +82,7 @@
   <div class="modal fade" id="modal-assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="update"> Choose a contributor
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -91,7 +91,7 @@
           <form id="frmTask" (ngSubmit)="assignTask()" [formGroup]="frmTask">
             <div class="col-11">
               <select [(ngModel)]="selectedUserAssign"
-                class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light"
+                class="form-control col ms-sm-3 me-sm-3 float-start bg-dark text-light border-0"
                 aria-label="Default select example" id="assignedTo" formControlName="assignedTo" name="assignedTo">
                 <option value="" selected>Choose one...</option>
                 <option *ngFor="let user of users" [value]="user.uidUser">{{
@@ -104,7 +104,7 @@
             </div>
           </form>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <button type="submit" form="frmTask" [disabled]="frmTask.invalid" class="btn btn-outline-teal text-light"
             data-bs-dismiss="modal">Assign</button>
@@ -117,12 +117,11 @@
   <div class="modal fade" id="modal-complete-task" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="complete"> Are you sure to complete <strong>{{description}}</strong> task?
           </h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-pink text-light" (click)="completeTask(taskID)"
             data-bs-dismiss="modal">Complete</a>
@@ -135,12 +134,12 @@
   <div class="modal fade" id="modal-delete-task" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-dark text-light">
+        <div class="modal-header bg-dark text-light border-0">
           <h1 class="modal-title fs-5" id="delete"> Are you sure to delete <strong>{{description}}</strong> task?
           </h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer bg-dark text-light">
+        <div class="modal-footer bg-dark text-light border-0">
           <a type="button" class="btn btn-outline-secondary text-light" data-bs-dismiss="modal">Close</a>
           <a type="button" class="btn btn-outline-danger text-light" (click)="deleteTask(taskID)"
             data-bs-dismiss="modal">Delete</a>

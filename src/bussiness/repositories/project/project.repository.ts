@@ -19,6 +19,10 @@ export abstract class ProjectRepository {
     idLeader: string
   ): Observable<ProjectModel[]>;
 
+  abstract getProjectsActiveByLeaderIdAsync(
+    idLeader: string
+  ): Observable<ProjectModel[]>;
+
   abstract getActiveProjectsAsync(): Observable<ProjectModel[]>;
 
   abstract getAllProjectsAsync(): Observable<ProjectModel[]>;

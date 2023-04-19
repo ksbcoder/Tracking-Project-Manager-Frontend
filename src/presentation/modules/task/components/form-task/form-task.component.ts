@@ -1,17 +1,16 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewTaskCommand } from 'src/domain/commands/task/newTaskCommand';
 import { UpdateTaskCommand } from 'src/domain/commands/task/updateTaskCommand';
-import { GetProjectsByLeaderIdUseCase } from '../../../../../bussiness/useCases/project/getProjectsByLeaderId.usecase';
 import { GetTaskByIdUseCase } from '../../../../../bussiness/useCases/task/getTaskById.usercase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateTaskUseCase } from 'src/bussiness/useCases/task/createTask.usercase';
 import { UpdateTaskUseCase } from 'src/bussiness/useCases/task/updateTask.usercase';
 import { ProjectModel } from 'src/domain/models/project/project.model';
 import { UserModel } from 'src/domain/models/user/user.model';
-import { GetUsersUseCase } from '../../../../../bussiness/useCases/user/getUsers.usecase';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Phase, StateProject, StateTask } from 'src/base/utils/enums';
+import { GetProjectsActiveByLeaderIdUseCase } from 'src/bussiness/useCases/project/getProjectsActiveByLeaderId.usecase';
+import { GetActiveUsersUseCase } from 'src/bussiness/useCases/user/getActiveUsers.usecase';
 
 @Component({
   selector: 'sofka-form-task',
@@ -40,8 +39,8 @@ export class FormTaskComponent implements OnInit {
 
   //#region constructor
   constructor(
-    private getProjectsByLeaderIdUseCase: GetProjectsByLeaderIdUseCase,
-    private getUsersUseCase: GetUsersUseCase,
+    private getProjectsActiveByLeaderIdUseCase: GetProjectsActiveByLeaderIdUseCase,
+    private getActiveUsersUseCase: GetActiveUsersUseCase,
     private getTaskByIdUseCase: GetTaskByIdUseCase,
     private createTask: CreateTaskUseCase,
     private updateTask: UpdateTaskUseCase,
@@ -74,14 +73,17 @@ export class FormTaskComponent implements OnInit {
   //#region on init (formPreload)
   ngOnInit(): void {
     //consult for selects
-    this.getProjectsByLeader();
-    this.getUsers();
+    this.getProjectsActiveByLeader();
+    this.getActiveUsers();
     if (this.formType == 'update') {
       let subGet: any;
       let subParams = this.route.params.subscribe((params) => {
         subGet = this.getTaskByIdUseCase.execute(params['id']).subscribe({
           next: (data) => {
-            this.selectedProject = data.projectID;
+            this.selectedProject = '';
+            if (this.projects.length != 0) {
+              this.selectedProject = data.projectID;
+            }
             this.selectedUser = data.assignedTo;
             this.frmTask.setValue({
               projectID: data.projectID,
@@ -207,50 +209,32 @@ export class FormTaskComponent implements OnInit {
   //#endregion
 
   //#region consults
-  getProjectsByLeader() {
-    let subGetProjects = this.getProjectsByLeaderIdUseCase
+  getProjectsActiveByLeader() {
+    let subGetProjects = this.getProjectsActiveByLeaderIdUseCase
       .execute(this.leaderID)
       .subscribe({
-        next: (data) => {
-          this.projects = data;
-        },
-        error: (err) => console.log(err),
-        complete: () => {
-          subGetProjects.unsubscribe();
-          this.projects.forEach((project) => {
-            let pos = this.projects.indexOf(project);
-            console.log(project);
-            if (
-              project.phase == null ||
-              project.stateProject != StateProject.Active
-            ) {
-              this.projects.length >= 1
-                ? this.projects.splice(pos, 1)
-                : (this.projects = []);
-            }
-          });
-
+        next: (data) => (this.projects = data),
+        error: (err) => {
+          console.log(err)
           if (this.projects.length == 0) {
-            this.toastr.info('No projects available.', '', {
+            this.toastr.info('No projects opened or active.', '', {
               timeOut: 2500,
               positionClass: 'toast-bottom-right',
               closeButton: true,
             });
           }
         },
+        complete: () => {
+          subGetProjects.unsubscribe();
+        },
       });
   }
 
-  getUsers() {
-    let subGetUsers = this.getUsersUseCase.execute().subscribe({
-      next: (data) => {
-        this.users = data;
-        this.users.forEach((user) => {
-          let pos = this.users.indexOf(user);
-          if (user.role == 0 || user.role == 1) {
-            this.users.splice(pos, 1);
-          }
-        });
+  getActiveUsers() {
+    let subGetUsers = this.getActiveUsersUseCase.execute().subscribe({
+      next: (data) => this.users = data,
+      error: (err) => {
+        console.log(err)
         if (this.users.length == 0) {
           this.toastr.info('No contributors available.', '', {
             timeOut: 2500,
@@ -259,7 +243,6 @@ export class FormTaskComponent implements OnInit {
           });
         }
       },
-      error: (err) => console.log(err),
       complete: () => {
         subGetUsers.unsubscribe();
       },

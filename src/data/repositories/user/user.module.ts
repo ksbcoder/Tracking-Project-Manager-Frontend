@@ -8,6 +8,7 @@ import { DeleteUserUseCase } from 'src/bussiness/useCases/user/deleteUser.usecas
 import { GetUserByIdUseCase } from 'src/bussiness/useCases/user/getUserById.usecase';
 import { UpdateUserUseCase } from 'src/bussiness/useCases/user/updateUser.usecase';
 import { GetUsersUseCase } from 'src/bussiness/useCases/user/getUsers.usecase';
+import { GetActiveUsersUseCase } from '../../../bussiness/useCases/user/getActiveUsers.usecase';
 
 const createUserUseCaseFactory = (userRepo: UserRepository) =>
   new CreateUserUseCase(userRepo);
@@ -41,6 +42,14 @@ export const getUsersUseCaseProvider = {
   deps: [UserRepository],
 };
 
+const getActiveUsersUseCaseFactory = (userRepo: UserRepository) =>
+  new GetActiveUsersUseCase(userRepo);
+export const getActiveUsersUseCaseProvider = {
+  provide: GetActiveUsersUseCase,
+  useFactory: getActiveUsersUseCaseFactory,
+  deps: [UserRepository],
+};
+
 const updateUserUseCaseFactory = (userRepo: UserRepository) =>
   new UpdateUserUseCase(userRepo);
 export const updateUserUseCaseProvider = {
@@ -55,9 +64,10 @@ export const updateUserUseCaseProvider = {
     deleteUserUseCaseProvider,
     getUserByIdUseCaseProvider,
     getUsersUseCaseProvider,
+    getActiveUsersUseCaseProvider,
     updateUserUseCaseProvider,
     { provide: UserRepository, useClass: UserImplementationRepository },
   ],
   imports: [CommonModule, HttpClientModule],
 })
-export class UserModule {}
+export class UserModule { }

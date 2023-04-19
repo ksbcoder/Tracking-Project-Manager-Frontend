@@ -3,12 +3,12 @@ import { TaskModel } from 'src/domain/models/task/task.model';
 import { GetTasksByUserIdUseCase } from '../../../../../bussiness/useCases/task/getTasksByUserId.usercase';
 import { UserModel } from 'src/domain/models/user/user.model';
 import { AssignTaskUseCase } from '../../../../../bussiness/useCases/task/assignTask.usercase';
-import { GetUsersUseCase } from '../../../../../bussiness/useCases/user/getUsers.usecase';
 import { GetAllTasksUseCase } from '../../../../../bussiness/useCases/task/getAllTasks.usercase';
 import { CompleteTaskUseCase } from '../../../../../bussiness/useCases/task/completeTask.usercase';
 import { DeleteTaskUseCase } from '../../../../../bussiness/useCases/task/deleteTask.usercase';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { GetActiveUsersUseCase } from 'src/bussiness/useCases/user/getActiveUsers.usecase';
 
 @Component({
   selector: 'sofka-list-tasks',
@@ -41,7 +41,7 @@ export class ListTasksComponent implements OnInit {
   constructor(
     private getAllTasksUseCase: GetAllTasksUseCase,
     private getTasksByUserIdUseCase: GetTasksByUserIdUseCase,
-    private getUsersUseCase: GetUsersUseCase,
+    private getActiveUsersUseCase: GetActiveUsersUseCase,
     private assignTaskUseCase: AssignTaskUseCase,
     private completeTaskUseCase: CompleteTaskUseCase,
     private deleteTaskUseCase: DeleteTaskUseCase,
@@ -68,8 +68,8 @@ export class ListTasksComponent implements OnInit {
   ngOnInit(): void {
     switch (this.role) {
       case '1':
-        this.getUsers();
         this.getAllTasks();
+        this.getActiveUsers();
         break;
       case '2':
         this.getTasksByUser(this.userID);
@@ -218,25 +218,21 @@ export class ListTasksComponent implements OnInit {
       });
   }
 
-  getUsers() {
-    let subGetUsers = this.getUsersUseCase.execute().subscribe({
+  getActiveUsers() {
+    let subGetUsers = this.getActiveUsersUseCase.execute().subscribe({
       next: (data) => (this.users = data),
-      error: (err) => console.log(err),
-      complete: () => {
-        subGetUsers.unsubscribe();
-        this.users.forEach((user) => {
-          let pos = this.users.indexOf(user);
-          if (user.role == 1 || user.role == 0) {
-            this.users.splice(pos, 1);
-          }
-        });
+      error: (err) => {
+        console.log(err)
         if (this.users.length == 0) {
-          this.toastr.info('There are no contributors registered.', '', {
+          this.toastr.info('No contributors available to assign.', '', {
             timeOut: 4500,
             positionClass: 'toast-bottom-right',
             closeButton: true,
           });
         }
+      },
+      complete: () => {
+        subGetUsers.unsubscribe();
       },
     });
   }

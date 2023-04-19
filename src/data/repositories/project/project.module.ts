@@ -12,6 +12,7 @@ import { ProjectImplementationRepository } from './project-implementation.reposi
 import { CompleteProjectUseCase } from '../../../bussiness/useCases/project/completeProject.usecase';
 import { OpenProjectUseCase } from '../../../bussiness/useCases/project/openProject.usecase';
 import { GetProjectsByLeaderIdUseCase } from 'src/bussiness/useCases/project/getProjectsByLeaderId.usecase';
+import { GetProjectsActiveByLeaderIdUseCase } from '../../../bussiness/useCases/project/getProjectsActiveByLeaderId.usecase';
 
 const CreateProjectUseCaseFactory = (projectRepo: ProjectRepository) =>
   new CreateProjectUseCase(projectRepo);
@@ -42,6 +43,14 @@ const GetProjectsByLeaderIdUseCaseFactory = (projectRepo: ProjectRepository) =>
 export const GetProjectsByLeaderIdUseCaseProvider = {
   provide: GetProjectsByLeaderIdUseCase,
   useFactory: GetProjectsByLeaderIdUseCaseFactory,
+  deps: [ProjectRepository],
+};
+
+const GetProjectsActiveByLeaderIdUseCaseFactory = (projectRepo: ProjectRepository) =>
+  new GetProjectsActiveByLeaderIdUseCase(projectRepo);
+export const GetProjectsActiveByLeaderIdUseCaseProvider = {
+  provide: GetProjectsActiveByLeaderIdUseCase,
+  useFactory: GetProjectsActiveByLeaderIdUseCaseFactory,
   deps: [ProjectRepository],
 };
 
@@ -91,6 +100,7 @@ export const CompleteProjectUseCaseProvider = {
     DeleteProjectUseCaseProvider,
     GetProjectByIdUseCaseProvider,
     GetProjectsByLeaderIdUseCaseProvider,
+    GetProjectsActiveByLeaderIdUseCaseProvider,
     GetActiveProjectsUseCaseProvider,
     GetAllProjectsUseCaseProvider,
     UpdateProjectUseCaseProvider,
@@ -100,4 +110,4 @@ export const CompleteProjectUseCaseProvider = {
   ],
   imports: [CommonModule, HttpClientModule],
 })
-export class ProjectModule {}
+export class ProjectModule { }

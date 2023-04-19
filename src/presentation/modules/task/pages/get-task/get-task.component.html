@@ -11,7 +11,11 @@
     <div class="row m-3">
       <div class="col col-lg-1"></div>
       <div class="col col-10">
-        <h3>Task: {{ task.description }}</h3>
+        <div class="row">
+          <div class="col">
+            <h3>Task: {{ task.description }}</h3>
+          </div>
+        </div>
         <div class="text-center">
           <form id="frmViewProject"
             class="form-control bg-container-or-form mt-3 p-4 border-0 text-start text-light shadow-lg">
@@ -20,29 +24,29 @@
                 <div class="mb-3 row">
                   <label for="CreatedBy" class="col-sm-3 col-form-label">Created by</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="CreatedBy" name="createdBy"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="CreatedBy" name="createdBy"
                       [value]="leader? leader.userName : ''" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="CreatedAt" class="col-sm-3 col-form-label">Created At</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="CreatedAt" name="createdAt"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="CreatedAt" name="createdAt"
                       [value]="createdAt" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="AssignedTo" class="col-sm-3 col-form-label">Assigned to</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="AssignedTo" name="assignedTo"
-                      [value]="contributor ? contributor.userName : ''" readonly>
+                    <input type="text" class="form-control bg-dark text-light border-0" id="AssignedTo"
+                      name="assignedTo" [value]="contributor ? contributor.userName : ''" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="AssignedAt" class="col-sm-3 col-form-label">Assigned at</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="AssignedAt" name="assignedAt"
-                      [value]="assignedAt" readonly>
+                    <input type="text" class="form-control bg-dark text-light border-0" id="AssignedAt"
+                      name="assignedAt" [value]="assignedAt" readonly>
                   </div>
                 </div>
               </div>
@@ -50,28 +54,28 @@
                 <div class="mb-3 row">
                   <label for="Deadline" class="col-sm-3 col-form-label">Deadline</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Deadline" name="deadLine"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Deadline" name="deadLine"
                       [value]="deadLine" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="CompletedAt" class="col-sm-3 col-form-label">Completed At</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="CompletedAt" name="completedAt"
-                      [value]="completedAt" readonly>
+                    <input type="text" class="form-control bg-dark text-light border-0" id="CompletedAt"
+                      name="completedAt" [value]="completedAt" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="Priority" class="col-sm-3 col-form-label">Priority</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="Priority" name="priority"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="Priority" name="priority"
                       [value]="task.priority | enumsNumberToStringPipe: 'priority'" readonly>
                   </div>
                 </div>
                 <div class="mb-3 row">
                   <label for="StateTask" class="col-sm-3 col-form-label">State</label>
                   <div class="col">
-                    <input type="text" class="form-control bg-dark text-light" id="StateTask" name="stateTask"
+                    <input type="text" class="form-control bg-dark text-light border-0" id="StateTask" name="stateTask"
                       [value]="task.stateTask | enumsNumberToStringPipe: 'stateTask'" readonly>
                   </div>
                 </div>

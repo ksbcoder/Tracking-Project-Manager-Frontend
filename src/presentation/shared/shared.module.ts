@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { ShowForRolesDirective } from './directives/show-for-roles.directive';
+import { DateToRelativeTimePipe } from './pipes/date-to-relative-time.pipe/date-to-relative-time.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ShowForRolesDirective } from './directives/show-for-roles.directive';
     AccessDeniedComponent,
     AppLayoutComponent,
     ShowForRolesDirective,
+    DateToRelativeTimePipe,
   ],
   exports: [
     EnumsNumberToStringPipe,
@@ -27,7 +29,8 @@ import { ShowForRolesDirective } from './directives/show-for-roles.directive';
     AccessDeniedComponent,
     AppLayoutComponent,
     ShowForRolesDirective,
+    DateToRelativeTimePipe,
   ],
   imports: [CommonModule, RouterModule],
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -6,15 +6,19 @@
     <div class="row m-3">
       <div class="col col-lg-1"></div>
       <div class="col col-10">
-        <h3 [hidden]="formType !== 'update'">Update project</h3>
-        <h3 [hidden]="formType !== 'create'">Create project</h3>
+        <div class="row">
+          <div class="col">
+            <h3 [hidden]="formType !== 'update'">Update project</h3>
+            <h3 [hidden]="formType !== 'create'">Create project</h3>
+          </div>
+        </div>
         <div class="text-center">
           <form id="frmProject" (ngSubmit)="sendData()" [formGroup]="frmProject"
             class="form-control bg-container-or-form mt-3 p-3 border-0 text-start text-light shadow-lg">
             <div class="mb-3 row">
               <label for="Name" class="col-sm-2 col-form-label">Name</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control bg-dark text-light" id="Name" placeholder="name project"
+                <input type="text" class="form-control bg-dark text-light border-0" id="Name" placeholder="name project"
                   formControlName="name" name="name">
                 <p class="text-warning ms-4" id="name-error"
                   *ngIf="frmProject.get('name')?.hasError('required') && frmProject.get('name')?.touched">
@@ -29,7 +33,7 @@
             <div class="mb-3 row">
               <label for="Description" class="col-sm-2 col-form-label">Description</label>
               <div class="col-sm-10">
-                <textarea type="text" class="form-control bg-dark text-light" id="Description"
+                <textarea type="text" class="form-control bg-dark text-light border-0" id="Description"
                   placeholder="description project" formControlName="description" name="description">
                 </textarea>
                 <p p class="text-warning ms-4"
@@ -45,8 +49,8 @@
             <div class="mb-3 row" [hidden]="formType === 'create'">
               <label for="Deadline" class="col-sm-2 col-form-label">Deadline</label>
               <div class="col-sm-3">
-                <input type="date" class="form-control bg-dark text-light" id="Deadline" formControlName="deadLine"
-                  name="deadLine">
+                <input type="date" class="form-control bg-dark text-light border-0" id="Deadline"
+                  formControlName="deadLine" name="deadLine">
                 <p class="text-warning ms-4"
                   *ngIf="frmProject.get('deadLine')?.hasError('required') && frmProject.get('deadLine')?.touched">
                   You must indicate the project deadLine.
@@ -56,7 +60,7 @@
             <div class="mb-3 row" [hidden]="formType === 'create'">
               <label for="StateProject" class="col-sm-2 col-form-label">State project</label>
               <div class="col-sm-10">
-                <select class="form-control col me-sm-3 float-start bg-dark text-light"
+                <select class="form-control col me-sm-3 float-start bg-dark text-light border-0"
                   aria-label="Default select example" id="StateProject" formControlName="stateProject"
                   name="stateProject" [required]="formType === 'update'">
                   <option value="" selected>Choose one...</option>
