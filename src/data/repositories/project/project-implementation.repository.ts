@@ -68,12 +68,13 @@ export class ProjectImplementationRepository extends ProjectRepository {
   }
   openProjectAsync(params: {
     idProject: string;
+    idLeader: string;
     project: OpenProjectCommand;
   }): Observable<UpdateProjectDTO> {
     return this.http.put<UpdateProjectDTO>(
       environment.urlApiProjects +
       'Project/OpenProject/ID?idProject=' +
-      params.idProject,
+      params.idProject + '&uidUser=' + params.idLeader,
       params.project
     );
   }

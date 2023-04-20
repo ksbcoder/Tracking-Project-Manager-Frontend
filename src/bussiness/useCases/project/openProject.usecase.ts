@@ -6,15 +6,16 @@ import { OpenProjectCommand } from 'src/domain/commands/project/openProjectComma
 
 export class OpenProjectUseCase
   implements
-    UseCase<
-      { idProject: string; project: OpenProjectCommand },
-      UpdateProjectDTO
-    >
+  UseCase<
+    { idProject: string; idLeader: string; project: OpenProjectCommand },
+    UpdateProjectDTO
+  >
 {
-  constructor(private projectRepository: ProjectRepository) {}
+  constructor(private projectRepository: ProjectRepository) { }
 
   execute(params: {
     idProject: string;
+    idLeader: string;
     project: OpenProjectCommand;
   }): Observable<UpdateProjectDTO> {
     return this.projectRepository.openProjectAsync(params);

@@ -96,7 +96,7 @@ export class ListProjectsComponent implements OnInit {
     this.openProjectCommand.deadLine = dateToSend;
 
     let subOpen = this.openProjectUseCase
-      .execute({ idProject: this.projectID, project: this.openProjectCommand })
+      .execute({ idProject: this.projectID, idLeader: this.uidUser, project: this.openProjectCommand })
       .subscribe({
         next: (data) => {
           this.ngOnInit();

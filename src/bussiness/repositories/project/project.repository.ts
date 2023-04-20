@@ -34,6 +34,7 @@ export abstract class ProjectRepository {
 
   abstract openProjectAsync(params: {
     idProject: string;
+    idLeader: string;
     project: OpenProjectCommand;
   }): Observable<UpdateProjectDTO>;
 
